@@ -35,7 +35,11 @@ function App() {
               }
             />
             <Route
+<<<<<<< HEAD
               path={Paths.User}
+=======
+              path={Paths.Partner}
+>>>>>>> refs/remotes/origin/main
               element={
                 <ProtectedRoute>
                   <Profile />

@@ -2,7 +2,11 @@ import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../api/user";
+<<<<<<< HEAD
 import Paths from "../constants/Paths";
+=======
+import { Paths } from "../constants/Paths";
+>>>>>>> refs/remotes/origin/main
 
 const Login = () => {
   const navigate = useNavigate();

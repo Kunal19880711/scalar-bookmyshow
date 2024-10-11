@@ -1,7 +1,11 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import Paths  from "../constants/Paths";
+=======
+import { Paths } from "../constants/Paths";
+>>>>>>> refs/remotes/origin/main
 import { RegisterUser } from "../api/user";
 
 const Register = () => {
