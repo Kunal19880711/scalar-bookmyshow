@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
-import { hideLoading, showLoading } from "../redux/loaderSlice";
-import { GetCurrentUser } from "../api/user";
-import { Layout, Menu, message } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
   LogoutOutlined,
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Layout, Menu, message } from "antd";
+import Paths from "../constants/Paths";
+import { hideLoading, showLoading } from "../redux/loaderSlice";
+import { setUser } from "../redux/userSlice";
+import { GetCurrentUser } from "../api/user";
 
 const ProtectedRoute = ({ children }) => {
-  const user = useSelector((store) => store.user);
+  const {user} = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -21,7 +23,7 @@ const ProtectedRoute = ({ children }) => {
       label: "Home",
       icon: <HomeOutlined />,
       key: "home",
-      onClick: () => navigate("/"),
+      onClick: () => navigate(Paths.Home),
     },
     {
       label: `${user?.name ?? ""}`,
@@ -33,11 +35,11 @@ const ProtectedRoute = ({ children }) => {
           key: "profile",
           onClick: () => {
             if (user.role === "admin") {
-              navigate("/admin");
+              navigate(Paths.Admin);
             } else if (user.role === "partner") {
-              navigate("/partner");
+              navigate(Paths.Partner);
             } else {
-              navigate("/user");
+              navigate(Paths.User);
             }
           },
         },
@@ -47,7 +49,7 @@ const ProtectedRoute = ({ children }) => {
           key: "logout",
           onClick: () => {
             localStorage.removeItem("tokenForBMS");
-            navigate("/login");
+            navigate(Paths.Login);
           },
         },
       ],
@@ -64,6 +66,7 @@ const ProtectedRoute = ({ children }) => {
     } catch (e) {
       // dispatch(hideLoading());
       message.error(e?.message);
+      navigate(Paths.Login);
     } finally {
       dispatch(hideLoading());
     }
@@ -73,9 +76,9 @@ const ProtectedRoute = ({ children }) => {
     if (localStorage.getItem("tokenForBMS")) {
       getValidUser();
     } else {
-      navigate("/login");
+      navigate(Paths.Login);
     }
-  });
+  }, []);
   return (
     user && (
       <>
@@ -97,3 +100,4 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export default ProtectedRoute;
+
