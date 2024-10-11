@@ -3,6 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 const userRoute = require("./routes/userRoute");
+const movieRoute = require("./routes/movieRoute");
 const handleMongooseError = require("./middleware/handleMongooseError");
 const handleError = require("./middleware/handleError");
 
@@ -16,6 +17,7 @@ if(process.env.SESSION_COOKIE_NAME) {
     app.use(cookieParser());
 }
 app.use('/bms/users', userRoute);
+app.use('/bms/movies', movieRoute);
 
 app.use(handleMongooseError);
 app.use(handleError);
