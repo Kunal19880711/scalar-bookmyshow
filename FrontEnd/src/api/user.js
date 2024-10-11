@@ -22,7 +22,7 @@ export const LoginUser = async (value) => {
 
 export const GetCurrentUser = async () => {
   try {
-    const response = await axiosInstance.get("/users/currentUser");
+    const response = await axiosInstance.get("/users/getCurrentUser");
     return response.data;
   } catch (error) {
     console.log(error);

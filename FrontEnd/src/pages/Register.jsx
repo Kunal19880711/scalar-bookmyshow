@@ -1,7 +1,7 @@
 import React from "react";
-
 import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { Paths } from "../constants/Paths";
 import { RegisterUser } from "../api/user";
 
 const Register = () => {
@@ -13,7 +13,7 @@ const Register = () => {
       const response = await RegisterUser(values);
       if (response?.success) {
         message.success(response?.message);
-        navigate("/login");
+        navigate(Paths.Login);
       }
     } catch (error) {
       message.error(error?.message);
@@ -73,7 +73,7 @@ const Register = () => {
         </section>
         <section>
           <p>
-            Already a user ? <Link to="/login">Login Now</Link>
+            Already a user ? <Link to={Paths.Login}>Login Now</Link>
           </p>
         </section>
       </main>
@@ -82,3 +82,4 @@ const Register = () => {
 };
 
 export default Register;
+

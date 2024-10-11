@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../api/user";
+import { Paths } from "../constants/Paths";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Login = () => {
       if (response?.success) {
         message.success(response?.message);
         localStorage.setItem("tokenForBMS", response?.data);
-        navigate("/");
+        navigate(Paths.Home);
       }
     } catch (error) {
       message.error(error?.message);
@@ -63,7 +64,7 @@ const Login = () => {
         </section>
         <section>
           <p>
-            New user ? <Link to="/register">Register Now</Link>
+            New user ? <Link to={Paths.Register}>Register Now</Link>
           </p>
         </section>
       </main>

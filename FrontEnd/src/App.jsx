@@ -2,6 +2,7 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
+import Paths from "./constants/Paths";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -18,7 +19,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route
-              path="/"
+              path={Paths.Home}
               element={
                 <ProtectedRoute>
                   <Home />
@@ -26,7 +27,7 @@ function App() {
               }
             />
             <Route
-              path="/admin"
+              path={Paths.Admin}
               element={
                 <ProtectedRoute>
                   <Admin />
@@ -34,7 +35,7 @@ function App() {
               }
             />
             <Route
-              path="/profile"
+              path={Paths.Partner}
               element={
                 <ProtectedRoute>
                   <Profile />
@@ -42,15 +43,15 @@ function App() {
               }
             />
             <Route
-              path="/partner"
+              path={Paths.Partner}
               element={
                 <ProtectedRoute>
                   <Partner />
                 </ProtectedRoute>
               }
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path={Paths.Login} element={<Login />} />
+            <Route path={Paths.Register} element={<Register />} />
           </Routes>
         </BrowserRouter>
       </Provider>
