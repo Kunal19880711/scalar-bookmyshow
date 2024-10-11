@@ -7,11 +7,9 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, message } from "antd";
+import { Layout, Menu } from "antd";
 import Paths from "../constants/Paths";
-import { hideLoading, showLoading } from "../redux/loaderSlice";
-import { setUser } from "../redux/userSlice";
-import { GetCurrentUser } from "../api/user";
+import { logout } from "../redux/userSlice";
 
 const ProtectedRoute = ({ children }) => {
   const {user} = useSelector((store) => store.user);
@@ -48,37 +46,19 @@ const ProtectedRoute = ({ children }) => {
           icon: <LogoutOutlined />,
           key: "logout",
           onClick: () => {
-            localStorage.removeItem("tokenForBMS");
-            navigate(Paths.Login);
+            dispatch(logout());
           },
         },
       ],
     },
   ];
 
-  const getValidUser = async () => {
-    try {
-      dispatch(showLoading());
-      const response = await GetCurrentUser();
-      dispatch(setUser(response?.data));
-      console.log(response);
-      dispatch(hideLoading());
-    } catch (e) {
-      // dispatch(hideLoading());
-      message.error(e?.message);
-      navigate(Paths.Login);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
-
   useEffect(() => {
-    if (localStorage.getItem("tokenForBMS")) {
-      getValidUser();
-    } else {
+    if(!user) {
       navigate(Paths.Login);
     }
-  }, []);
+  }, [user]); 
+  
   return (
     user && (
       <>

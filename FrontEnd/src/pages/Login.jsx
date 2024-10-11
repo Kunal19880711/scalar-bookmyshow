@@ -1,23 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
-import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../api/user";
-<<<<<<< HEAD
 import Paths from "../constants/Paths";
-=======
-import { Paths } from "../constants/Paths";
->>>>>>> refs/remotes/origin/main
+import { setToken } from "../redux/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
       const response = await LoginUser(values);
       if (response?.success) {
         message.success(response?.message);
-        localStorage.setItem("tokenForBMS", response?.data);
-        navigate(Paths.Home);
+        dispatch(setToken(response?.data));
       }
     } catch (error) {
       message.error(error?.message);
