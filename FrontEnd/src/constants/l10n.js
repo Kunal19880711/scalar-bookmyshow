@@ -13,7 +13,6 @@ const strings = new LocalizedStrings({
     PAGES_LOGIN_FORM_SUBMIT: "Login",
     PAGES_LOGIN_NEW_USER: "New user ?",
     PAGES_LOGIN_REGISTER_NOW: "Register Now",
-
     PAGES_REGISTER_HEADING: "Register to Bookmyshow",
     PAGES_REGISTER_FORM_NAME_LABEL: "Name",
     PAGES_REGISTER_FORM_NAME_REQUIRED_MESSAGE: "Name is required",
