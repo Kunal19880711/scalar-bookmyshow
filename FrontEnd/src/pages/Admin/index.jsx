@@ -2,17 +2,18 @@ import React from "react";
 import { Tabs } from "antd";
 import MovieList from "./MovieList";
 import TheatreTable from "./TheatreTable";
+import strings from "../../constants/l10n";
 
 const Admin = () => {
   const tabItems = [
     {
       key: "movies",
-      label: "Movies",
+      label: strings.PAGES_ADMIN_TABS_MOVIES,
       children: <MovieList />,
     },
     {
       key: "theaters",
-      label: "Theaters",
+      label: strings.PAGES_ADMIN_TABS_THEATERS,
       children: <TheatreTable />,
     },
   ];

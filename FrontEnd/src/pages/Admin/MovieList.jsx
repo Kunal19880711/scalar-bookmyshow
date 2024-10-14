@@ -5,6 +5,7 @@ import { Button, Table, message } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 
+import strings from "../../constants/l10n";
 import { GetAllMovies } from "../../api/movie";
 import MovieForm from "./MovieForm";
 import DeleteMovieModal from "./DeleteMovieModal";
@@ -34,7 +35,7 @@ const MovieList = () => {
 
   const tableHeading = [
     {
-      title: "Poster",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_POSTER,
       dataIndex: "poster",
       key: "poster",
       render: (text, data) => (
@@ -48,39 +49,39 @@ const MovieList = () => {
       ),
     },
     {
-      title: "Movie Name",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_NAME,
       dataIndex: "movieName",
       key: "movieName",
     },
     {
-      title: "Description",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_DESCRIPTION,
       dataIndex: "description",
       key: "description",
     },
     {
-      title: "Duration",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_DURATION,
       dataIndex: "duration",
       key: "duration",
       render: (text) => `${text} min`,
     },
     {
-      title: "Genre",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_GENRE,
       dataIndex: "genre",
       key: "genre",
     },
     {
-      title: "Language",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_LANGUAGE,
       dataIndex: "language",
       key: "language",
     },
     {
-      title: "Release Date",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_RELEASEDATE,
       dataIndex: "releaseDate",
       key: "releaseDate",
       render: (text, data) => moment(data.releaseDate).format("MM-DD-YYYY"),
     },
     {
-      title: "Actions",
+      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_ACTIONS,
       key: "actions",
       render: (text, data) => (
         <div>
@@ -116,7 +117,7 @@ const MovieList = () => {
             setIsModalOpen(true);
           }}
         >
-          Add Movie
+          {strings.PAGES_ADMIN_MOVIELIST_ADD_MOVIE}
         </Button>
       </div>
       <Table columns={tableHeading} dataSource={movies} />
