@@ -4,8 +4,10 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 const userRoute = require("./routes/userRoute");
 const movieRoute = require("./routes/movieRoute");
+const theaterRoute = require("./routes/theaterRoute");
 const handleMongooseError = require("./middleware/handleMongooseError");
 const handleError = require("./middleware/handleError");
+const validateJWTToken = require("./middleware/validateJWTToken");
 
 const app = express();
 require("dotenv").config();
@@ -18,6 +20,7 @@ if(process.env.SESSION_COOKIE_NAME) {
 }
 app.use('/bms/users', userRoute);
 app.use('/bms/movies', movieRoute);
+app.use("/bms/theaters", validateJWTToken, theaterRoute);
 
 app.use(handleMongooseError);
 app.use(handleError);
