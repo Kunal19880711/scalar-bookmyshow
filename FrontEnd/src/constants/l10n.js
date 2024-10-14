@@ -2,6 +2,10 @@ import LocalizedStrings from "react-localization";
 
 const strings = new LocalizedStrings({
   en: {
+    COMPONENT_NAVBAR_HEADING = "Book My Show",
+    COMPONENT_NAVBAR_NAVITEMS_HOME = "Home",
+    COMPONENT_NAVBAR_NAVITEMS_MY_PROFILE = "My Profile",
+    COMPONENT_NAVBAR_NAVITEMS_LOGOUT = "Logout",
     PAGES_HOME_HOME: "Home",
     PAGES_LOGIN_HEADING: "Login to Bookmyshow",
     PAGES_LOGIN_FORM_EMAIL_LABEL: "Email",
