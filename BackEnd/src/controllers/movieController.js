@@ -46,7 +46,9 @@ const updateMovie = async (req, res) => {
 };
 const deleteMovie = async (req, res) => {
   try {
-    const deletedMovie = await Movie.findByIdAndDelete(req?.body?.movieId);
+    const movieId = req?.params?.movieId;
+    console.log(movieId);
+    const deletedMovie = await Movie.findByIdAndDelete(req?.params?.movieId);
     res.status(200).json({
       data: deletedMovie,
       success: true,
