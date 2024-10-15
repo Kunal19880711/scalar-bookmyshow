@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Radio } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
@@ -79,10 +79,31 @@ const Register = () => {
               <Input.Password
                 id="password"
                 type="password"
-                placeholder={
-                  strings.PAGES_REGISTER_FORM_PASSWORD_PLACEHOLDER
-                }
+                placeholder={strings.PAGES_REGISTER_FORM_PASSWORD_PLACEHOLDER}
               />
+            </Form.Item>
+            <Form.Item
+              label={strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_LABEL}
+              htmlFor="role"
+              name="role"
+              className="d-block text-center"
+              initialValue={"user"}
+              rules={[
+                {
+                  required: true,
+                  message:
+                    strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_REQUIRED_MESSAGE,
+                },
+              ]}
+            >
+              <Radio.Group>
+                <Radio value={"user"}>
+                  {strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_OPTION_NO}
+                </Radio>
+                <Radio value={"partner"}>
+                  {strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_OPTION_YES}
+                </Radio>
+              </Radio.Group>
             </Form.Item>
             <Form.Item>
               <Button
@@ -91,7 +112,7 @@ const Register = () => {
                 htmlType="submit"
                 style={{ fontSize: "1rem", fontWeight: "600" }}
               >
-                {strings.PAGES_REGISTER_FORM_SUBMIT}
+                {strings.PAGES_REGISTER_FORM_SUBMIT_BUTTON}
               </Button>
             </Form.Item>
           </Form>
@@ -108,4 +129,3 @@ const Register = () => {
 };
 
 export default Register;
-

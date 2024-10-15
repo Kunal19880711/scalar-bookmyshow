@@ -72,7 +72,7 @@ const Login = () => {
                 htmlType="submit"
                 style={{ fontSize: "1rem", fontWeight: "600" }}
               >
-                {strings.PAGES_LOGIN_FORM_SUBMIT}
+                {strings.PAGES_LOGIN_FORM_SUBMIT_BUTTON}
               </Button>
             </Form.Item>
           </Form>
