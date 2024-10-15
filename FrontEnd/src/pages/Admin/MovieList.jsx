@@ -85,7 +85,7 @@ const MovieList = () => {
       title: strings.MOVIELIST_TABLEHEADING_ACTIONS,
       key: "actions",
       render: (text, data) => (
-        <div>
+        <div className="d-flex align-items-center gap-10">
           <Button
             onClick={() => {
               setIsModalOpen(true);

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import moment from "moment";
 import { Button, Table, message } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
@@ -72,7 +71,7 @@ const TheaterList = () => {
       dataIndex: "actions",
       key: "actions",
       render: (text, data) => (
-        <div>
+        <div className="d-flex align-items-center gap-10">
           <Button
             onClick={() => {
               setIsModalOpen(true);
