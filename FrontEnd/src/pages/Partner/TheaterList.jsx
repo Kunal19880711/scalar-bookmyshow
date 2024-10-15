@@ -7,6 +7,7 @@ import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { GetAllTheaters } from "../../api/theater";
 import strings from "../../constants/l10n";
 import TheaterForm from "./TheaterForm";
+import DeleteTheaterModal from "./DeleteTheaterModal";
 
 const TheaterList = () => {
   const [theaters, setTheaters] = useState([]);
@@ -56,6 +57,15 @@ const TheaterList = () => {
       title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_EMAIL,
       dataIndex: "email",
       key: "email",
+    },
+    {
+      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_STATUS,
+      dataIndex: "isActive",
+      key: "isActive",
+      render: (isActive) =>
+        isActive
+          ? strings.PAGES_PARTNER_THEATERLIST_STATUS_ACTIVE
+          : strings.PAGES_PARTNER_THEATERLIST_STATUS_INACTIVE,
     },
     {
       title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_ACTIONS,
