@@ -1,5 +1,4 @@
 const express = require("express");
-const { validateJWTToken } = require("../middleware/validateJWTToken");
 const theaterController = require("../controllers/theaterController");
 
 const router = express.Router();
