@@ -1,7 +1,7 @@
 const HttpError = require("../common/HttpError");
 
 module.exports = function handleMongooseError(error, req, res, next) {
-  if (err instanceof mongoose.Error.ValidationError) {
+  if (error instanceof mongoose.Error.ValidationError) {
     const data = Object.keys(err.errors).map((key) => ({
       keyPath: key,
       value: err.errors[key].message,
