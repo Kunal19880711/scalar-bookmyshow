@@ -90,6 +90,7 @@ const TheaterList = () => {
           >
             <DeleteOutlined />
           </Button>
+          {data.isActive && <Button>+ Shows</Button>}
         </div>
       ),
     },
