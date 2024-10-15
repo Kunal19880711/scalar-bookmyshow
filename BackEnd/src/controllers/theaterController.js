@@ -48,7 +48,7 @@ const updateTheater = async (req, res) => {
       req.body,
       { new: true }
     );
-    if(!updateTheater) {
+    if (!updateTheater) {
       throw new HttpError(404, "Theater not found");
     }
     res.status(200).json({
@@ -63,10 +63,10 @@ const updateTheater = async (req, res) => {
 
 const deleteTheater = async (req, res) => {
   try {
-    const deletedTheater = await Theater.findByIdAndRemove(
+    const deletedTheater = await Theater.findByIdAndDelete(
       req?.params?.theaterId
     );
-    if(!deletedTheater) {
+    if (!deletedTheater) {
       throw new HttpError(404, "Theater not found");
     }
     res.status(200).json({
