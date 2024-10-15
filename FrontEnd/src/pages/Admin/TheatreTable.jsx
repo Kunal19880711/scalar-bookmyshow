@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Table, message } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { GetAllTheaters, UpdateTheater } from "../../api/theater";
 import strings from "../../constants/l10n";
