@@ -44,7 +44,7 @@ const getAllTheatersByOwner = async (req, res) => {
 const updateTheater = async (req, res) => {
   try {
     const updatedTheater = await Theater.findByIdAndUpdate(
-      req.params.theaterId,
+      req.body.theaterId,
       req.body,
       { new: true }
     );

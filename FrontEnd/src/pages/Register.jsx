@@ -14,9 +14,8 @@ const Register = () => {
         message.success(response?.message);
         navigate(Paths.Login);
       }
-    } catch (error) {
-      message.error(error?.message);
-      console.log(error);
+    } catch (err) {
+      message.error(err?.message);
     }
   };
   return (

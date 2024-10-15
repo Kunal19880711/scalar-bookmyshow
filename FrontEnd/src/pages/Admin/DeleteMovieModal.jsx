@@ -1,7 +1,7 @@
 import { Modal, message } from "antd";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { useDispatch } from "react-redux";
-import { deleteMovie } from "../../api/movie";
+import { DeleteMovie } from "../../api/movie";
 
 const DeleteMovieModal = ({
   isDeleteModalOpen,
@@ -16,12 +16,12 @@ const DeleteMovieModal = ({
     try {
       dispatch(showLoading());
       const movieId = selectedMovie._id;
-      const response = await deleteMovie(movieId);
+      const response = await DeleteMovie(movieId);
       if (response.success) {
         message.success(response.message);
         getData();
       } else {
-        message.error(response.message);
+        message.error(response?.message);
       }
       setSelectedMovie(null);
       setIsDeleteModalOpen(false);
@@ -29,7 +29,7 @@ const DeleteMovieModal = ({
     } catch (err) {
       dispatch(hideLoading());
       setIsDeleteModalOpen(false);
-      message.error(err.message);
+      message.error(err?.message);
     }
   };
 

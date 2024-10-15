@@ -27,8 +27,8 @@ const MovieList = () => {
       }));
       setMovies(allMovies);
       dispatch(hideLoading());
-    } catch (e) {
-      message.error(e?.message);
+    } catch (err) {
+      message.error(err?.message);
     } finally {
       dispatch(hideLoading());
     }

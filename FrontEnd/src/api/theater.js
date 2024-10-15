@@ -1,3 +1,5 @@
+import { axiosInstance } from "./index";
+
 export const GetAllTheaters = async () => {
   try {
     const response = await axiosInstance.get("/theaters/getAllTheaters");
@@ -27,7 +29,7 @@ export const AddTheater = async (payload) => {
 
 export const UpdateTheater = async (payload) => {
   try {
-    const response = await axiosInstance.put(
+    const response = await axiosInstance.patch(
       "/theaters/updateTheater",
       payload
     );

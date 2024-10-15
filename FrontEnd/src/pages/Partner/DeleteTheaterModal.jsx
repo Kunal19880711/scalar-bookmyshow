@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, message } from "antd";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
-import { deleteTheater } from "../../api/theater";
+import { DeleteTheater } from "../../api/theater";
 
 const DeleteTheaterModal = ({
   isDeleteModalOpen,
@@ -17,7 +17,7 @@ const DeleteTheaterModal = ({
     try {
       dispatch(showLoading());
       const theaterId = selectedTheater._id;
-      const response = await deleteTheater(theaterId);
+      const response = await DeleteTheater(theaterId);
       if (response.success) {
         message.success(response.message);
         getData();
@@ -30,7 +30,7 @@ const DeleteTheaterModal = ({
     } catch (err) {
       dispatch(hideLoading());
       setIsDeleteModalOpen(false);
-      message.error(err.message);
+      message.error(err?.message);
     }
   };
 
@@ -55,3 +55,4 @@ const DeleteTheaterModal = ({
 };
 
 export default DeleteTheaterModal;
+

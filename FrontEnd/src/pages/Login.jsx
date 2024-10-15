@@ -16,9 +16,8 @@ const Login = () => {
         message.success(response?.message);
         dispatch(setToken(response?.data));
       }
-    } catch (error) {
-      message.error(error?.message);
-      console.log(error);
+    } catch (err) {
+      message.error(err?.message);
     }
   };
   return (

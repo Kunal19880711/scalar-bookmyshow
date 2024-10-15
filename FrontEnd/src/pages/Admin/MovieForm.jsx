@@ -4,7 +4,7 @@ import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
-import { updateMovie, addMovie } from "../../api/movie";
+import { UpdateMovie, AddMovie } from "../../api/movie";
 import strings from "../../constants/l10n";
 
 const MovieForm = ({
@@ -33,9 +33,9 @@ const MovieForm = ({
 
   const movieCreateOrEdit = async (values) => {
     if (formType === "add") {
-      return await addMovie(values);
+      return await AddMovie(values);
     }
-    return await updateMovie({
+    return await UpdateMovie({
       ...values,
       movieId: selectedMovie._id,
     });
@@ -49,9 +49,11 @@ const MovieForm = ({
         message.success(response.message);
         getData();
         handleCancel();
-      }
-    } catch (error) {
-      message.error(error);
+      } else {
+        message.error(response.message);
+      } 
+    } catch (err) {
+      message.error(err?.message);
     } finally {
       dispatch(hideLoading());
     }
