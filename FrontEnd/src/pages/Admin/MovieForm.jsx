@@ -13,9 +13,10 @@ const MovieForm = ({
   selectedMovie,
   setSelectedMovie,
   getData,
+  formType,
 }) => {
   const dispatch = useDispatch();
-  const formTitle = selectedMovie
+  const formTitle = formType === "edit"
     ? strings.PAGES_ADMIN_MOVIEFORM_HEADING_EDIT_MOVIE
     : strings.PAGES_ADMIN_MOVIEFORM_HEADING_ADD_MOVIE;
 
@@ -31,7 +32,7 @@ const MovieForm = ({
   };
 
   const movieCreateOrEdit = async (values) => {
-    if (!selectedMovie) {
+    if (formType === "add") {
       return await addMovie(values);
     }
     return await updateMovie({

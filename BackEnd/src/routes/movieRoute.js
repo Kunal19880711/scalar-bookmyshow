@@ -4,9 +4,9 @@ const movieController = require("../controllers/movieController");
 
 const router = express.Router();
 
-router.post("/addMovie", validateJWTToken, movieController.addMovie);
-router.get("/getAllMovies", validateJWTToken, movieController.getAllTheMovies);
-router.patch("/updateMovie", validateJWTToken, movieController.updateMovie);
-router.delete("/deleteMovie/:movieId", validateJWTToken, movieController.deleteMovie);
+router.post("/addMovie", movieController.addMovie);
+router.get("/getAllMovies", movieController.getAllTheMovies);
+router.patch("/updateMovie", movieController.updateMovie);
+router.delete("/deleteMovie/:movieId", movieController.deleteMovie);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const HttpError = require("../common/HttpError");
 const Movie = require("../models/movieSchema");
 
 const addMovie = async (req, res) => {
@@ -10,7 +11,6 @@ const addMovie = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    // res.status(500).json({ message: error.message });
     throw error;
   }
 };
@@ -23,7 +23,6 @@ const getAllTheMovies = async (req, res) => {
       message: "All Movies has been fetched successfully.",
     });
   } catch (error) {
-    // res.status(500).json({ message: error.message });
     throw error;
   }
 };
@@ -34,27 +33,30 @@ const updateMovie = async (req, res) => {
       req?.body,
       { new: true }
     );
+    if(!updatedMovie) {
+      throw new HttpError(404, "Movie not found");
+    }
     res.status(200).json({
       data: updatedMovie,
       success: true,
       message: "The Movie has been updated successfully.",
     });
   } catch (error) {
-    // res.status(500).json({ message: error.message });
     throw error;
   }
 };
 const deleteMovie = async (req, res) => {
   try {
-    const movieId = req?.params?.movieId;
     const deletedMovie = await Movie.findByIdAndDelete(req?.params?.movieId);
+    if(!deletedMovie) {
+      throw new HttpError(404, "Movie not found");
+    }
     res.status(200).json({
       data: deletedMovie,
       success: true,
       message: "The Movie has been deleted successfully.",
     });
   } catch (error) {
-    // res.status(500).json({ message: error.message });
     throw error;
   }
 };

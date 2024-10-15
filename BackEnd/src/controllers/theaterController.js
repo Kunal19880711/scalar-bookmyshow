@@ -1,3 +1,4 @@
+const HttpError = require("../common/HttpError");
 const Theater = require("../models/theaterSchema");
 
 const addTheater = async (req, res) => {
@@ -10,7 +11,7 @@ const addTheater = async (req, res) => {
       message: "Theater has been added successfully.",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    throw error;
   }
 };
 
@@ -23,35 +24,20 @@ const getAllTheaters = async (req, res) => {
       message: "All Theaters has been fetched successfully.",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    throw error;
   }
 };
 
 const getAllTheatersByOwner = async (req, res) => {
   try {
-    const allTheatersByOwner = await Theater.find({ owner: req.body.userId });
+    const allTheatersByOwner = await Theater.find({ owner: req?.body?.userId });
     res.status(200).json({
       data: allTheatersByOwner,
       success: true,
       message: "All Theaters has been fetched successfully.",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const getTheater = async (req, res) => {
-  try {
-    const singleTheater = await Theater.findById(req.params.theaterId);
-    if (!singleTheater)
-      return res.status(404).json({ message: "Theater not found." });
-    res.status(200).json({
-      data: singleTheater,
-      success: true,
-      message: "Theater has been fetched successfully.",
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    throw error;
   }
 };
 
@@ -62,30 +48,34 @@ const updateTheater = async (req, res) => {
       req.body,
       { new: true }
     );
+    if(!updateTheater) {
+      throw new HttpError(404, "Theater not found");
+    }
     res.status(200).json({
       data: updatedTheater,
       success: true,
       message: "Theater has been updated successfully.",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    throw error;
   }
 };
 
 const deleteTheater = async (req, res) => {
   try {
     const deletedTheater = await Theater.findByIdAndRemove(
-      req.params.theaterId
+      req?.params?.theaterId
     );
-    if (!deletedTheater)
-      return res.status(404).json({ message: "Theater not found." });
+    if(!deletedTheater) {
+      throw new HttpError(404, "Theater not found");
+    }
     res.status(200).json({
       data: deletedTheater,
       success: true,
       message: "Theater has been deleted successfully.",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    throw error;
   }
 };
 
@@ -93,7 +83,6 @@ module.exports = {
   addTheater,
   getAllTheaters,
   getAllTheatersByOwner,
-  getTheater,
   updateTheater,
   deleteTheater,
 };

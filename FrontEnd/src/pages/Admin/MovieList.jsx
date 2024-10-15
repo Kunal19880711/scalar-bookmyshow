@@ -15,6 +15,7 @@ const MovieList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [formType, setFormType] = useState("add");
   const dispatch = useDispatch();
   const getData = async () => {
     try {
@@ -89,6 +90,7 @@ const MovieList = () => {
             onClick={() => {
               setIsModalOpen(true);
               setSelectedMovie(data);
+              setFormType("edit");
             }}
           >
             <EditOutlined />
@@ -115,6 +117,8 @@ const MovieList = () => {
         <Button
           onClick={() => {
             setIsModalOpen(true);
+            setFormType("add");
+            setSelectedMovie(null);
           }}
         >
           {strings.PAGES_ADMIN_MOVIELIST_ADD_MOVIE}
@@ -128,6 +132,7 @@ const MovieList = () => {
           selectedMovie={selectedMovie}
           setSelectedMovie={setSelectedMovie}
           getData={getData}
+          formType={formType}
         />
       )}
       {isDeleteModalOpen && (

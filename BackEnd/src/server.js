@@ -19,7 +19,7 @@ if(process.env.SESSION_COOKIE_NAME) {
     app.use(cookieParser());
 }
 app.use('/bms/users', userRoute);
-app.use('/bms/movies', movieRoute);
+app.use('/bms/movies', validateJWTToken, movieRoute);
 app.use("/bms/theaters", validateJWTToken, theaterRoute);
 
 app.use(handleMongooseError);

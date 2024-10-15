@@ -36,7 +36,7 @@ const UserSession = ({ children }) => {
     }
   }, [token]);
 
-  // check for already exisiting session
+  // check for already existing session
   useEffect(() => {
     const token = localStorage.getItem("tokenForBMS");
     console.log(token);

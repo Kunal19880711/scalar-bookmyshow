@@ -6,8 +6,7 @@ const router = express.Router();
 
 router.post("/addTheater",  theaterController.addTheater);
 router.get("/getAllTheaters",  theaterController.getAllTheaters);
-router.get("/getAllTheatersByOwner/:ownerId",  theaterController.getAllTheatersByOwner);
-router.get("/getTheater/:theaterId",  theaterController.getTheater);
+router.get("/getAllTheatersByOwner",  theaterController.getAllTheatersByOwner);
 router.patch("/updateTheater",  theaterController.updateTheater);
 router.delete("/deleteTheater/:theaterId",  theaterController.deleteTheater);
 
