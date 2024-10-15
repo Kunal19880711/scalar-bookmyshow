@@ -5,14 +5,17 @@ import Paths from "../constants/Paths";
 import NavBar from "./NavBar";
 
 const ProtectedRoute = ({ children }) => {
-  const {user} = useSelector((store) => store.user);
+  const {user, initializing} = useSelector((store) => store.user);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(initializing) {
+      return;
+    }
     if(!user) {
       navigate(Paths.Login);
     }
-  }, [user]); 
+  }, [user, initializing]); 
   
   return (
     user && (

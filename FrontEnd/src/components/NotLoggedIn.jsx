@@ -5,12 +5,15 @@ import Paths from "../constants/Paths";
 
 const NotLoggedIn = ({ children }) => {
   const navigate = useNavigate();
-  const { user } = useSelector((store) => store.user);
+  const { user, initializing } = useSelector((store) => store.user);
   useEffect(() => {
+    if(initializing) {
+      return;
+    }
     if (user) {
       navigate(Paths.Home);
     }
-  }, [user]);
+  }, [user, initializing]);
   return <>{children}</>;
 };
 

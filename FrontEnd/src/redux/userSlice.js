@@ -5,6 +5,7 @@ const userSlice = createSlice({
     initialState: {
         user: null,
         token: null,
+        initializing: true,
     },
     reducers: {
         setUser: (state, action) => {
@@ -12,6 +13,9 @@ const userSlice = createSlice({
         },
         setToken: (state, action) => {
             state.token = action.payload;
+        },
+        setInitializing: (state, action) => {
+            state.initializing = action.payload;
         },
         logout: (state) => {
             localStorage.removeItem("tokenForBMS");
@@ -21,5 +25,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, setToken, logout } = userSlice.actions;
+export const { setUser, setToken, setInitializing, logout } = userSlice.actions;
 export default userSlice.reducer;
