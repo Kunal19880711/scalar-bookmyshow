@@ -19,8 +19,8 @@ const TheaterForm = ({
   const { user } = useSelector((state) => state.user);
   const formTitle =
     formType === "edit"
-      ? strings.PAGES_PARTNER_THEATERFORM_HEADING_EDIT_THEATER
-      : strings.PAGES_PARTNER_THEATERFORM_HEADING_ADD_THEATER;
+      ? strings.THEATERFORM_HEADING_EDIT_THEATER
+      : strings.THEATERFORM_HEADING_ADD_THEATER;
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -71,41 +71,37 @@ const TheaterForm = ({
         <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
           <Col span={24}>
             <Form.Item
-              label={strings.PAGES_PARTNER_THEATERFORM_FORM_THEATER_NAME_LABEL}
+              label={strings.THEATERFORM_FORM_THEATER_NAME_LABEL}
               name="name"
               rules={[
                 {
                   required: true,
                   message:
-                    strings.PAGES_PARTNER_THEATERFORM_FORM_THEATER_NAME_REQUIRED_MESSAGE,
+                    strings.THEATERFORM_FORM_THEATER_NAME_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input
-                placeholder={
-                  strings.PAGES_PARTNER_THEATERFORM_FORM_THEATER_NAME_PLACEHOLDER
-                }
+                placeholder={strings.THEATERFORM_FORM_THEATER_NAME_PLACEHOLDER}
               />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
-              label={
-                strings.PAGES_PARTNER_THEATERFORM_FORM_THEATER_ADDRESS_LABEL
-              }
+              label={strings.THEATERFORM_FORM_THEATER_ADDRESS_LABEL}
               name="address"
               rules={[
                 {
                   required: true,
                   message:
-                    strings.PAGES_PARTNER_THEATERFORM_FORM_THEATER_ADDRESS_REQUIRED_MESSAGE,
+                    strings.THEATERFORM_FORM_THEATER_ADDRESS_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <TextArea
                 rows="4"
                 placeholder={
-                  strings.PAGES_PARTNER_THEATERFORM_FORM_THEATER_ADDRESS_PLACEHOLDER
+                  strings.THEATERFORM_FORM_THEATER_ADDRESS_PLACEHOLDER
                 }
               />
             </Form.Item>
@@ -114,44 +110,37 @@ const TheaterForm = ({
             <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
               <Col span={12}>
                 <Form.Item
-                  label={strings.PAGES_PARTNER_THEATERFORM_FORM_EMAIL_LABEL}
+                  label={strings.THEATERFORM_FORM_EMAIL_LABEL}
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message:
-                        strings.PAGES_PARTNER_THEATERFORM_FORM_EMAIL_REQUIRED_MESSAGE,
+                      message: strings.THEATERFORM_FORM_EMAIL_REQUIRED_MESSAGE,
                     },
                     {
                       type: "email",
-                      message:
-                        strings.PAGES_PARTNER_THEATERFORM_FORM_EMAIL_INVALID_MESSAGE,
+                      message: strings.THEATERFORM_FORM_EMAIL_INVALID_MESSAGE,
                     },
                   ]}
                 >
                   <Input
-                    placeholder={
-                      strings.PAGES_PARTNER_THEATERFORM_FORM_EMAIL_PLACEHOLDER
-                    }
+                    placeholder={strings.THEATERFORM_FORM_EMAIL_PLACEHOLDER}
                   />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label={strings.PAGES_PARTNER_THEATERFORM_FORM_PHONE_LABEL}
+                  label={strings.THEATERFORM_FORM_PHONE_LABEL}
                   name="phone"
                   rules={[
                     {
                       required: true,
-                      message:
-                        strings.PAGES_PARTNER_THEATERFORM_FORM_PHONE_REQUIRED_MESSAGE,
+                      message: strings.THEATERFORM_FORM_PHONE_REQUIRED_MESSAGE,
                     },
                   ]}
                 >
                   <Input
-                    placeholder={
-                      strings.PAGES_PARTNER_THEATERFORM_FORM_PHONE_PLACEHOLDER
-                    }
+                    placeholder={strings.THEATERFORM_FORM_PHONE_PLACEHOLDER}
                   />
                 </Form.Item>
               </Col>
@@ -165,10 +154,10 @@ const TheaterForm = ({
             htmlType="submit"
             style={{ fontSize: "1rem", fontWeight: "600" }}
           >
-            {strings.PAGES_PARTNER_THEATERFORM_FORM_SUBMIT_BUTTON}
+            {strings.THEATERFORM_FORM_SUBMIT_BUTTON}
           </Button>
           <Button className="mt-3" block onClick={handleCancel}>
-            {strings.PAGES_PARTNER_THEATERFORM_FORM_CANCEL_BUTTON}
+            {strings.THEATERFORM_FORM_CANCEL_BUTTON}
           </Button>
         </Form.Item>
       </Form>

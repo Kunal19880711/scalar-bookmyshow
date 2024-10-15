@@ -22,67 +22,66 @@ const Register = () => {
     <header className="App-header">
       <main className="main-area mw-500 text-center px-3">
         <section>
-          <h1>{strings.PAGES_REGISTER_HEADING}</h1>
+          <h1>{strings.REGISTER_HEADING}</h1>
         </section>
         <section>
           <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
-              label={strings.PAGES_REGISTER_FORM_NAME_LABEL}
+              label={strings.REGISTER_FORM_NAME_LABEL}
               htmlFor="name"
               name="name"
               className="d-block"
               rules={[
                 {
                   required: true,
-                  message: strings.PAGES_REGISTER_FORM_NAME_REQUIRED_MESSAGE,
+                  message: strings.REGISTER_FORM_NAME_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input
                 id="name"
                 type="text"
-                placeholder={strings.PAGES_REGISTER_FORM_NAME_PLACEHOLDER}
+                placeholder={strings.REGISTER_FORM_NAME_PLACEHOLDER}
               />
             </Form.Item>
             <Form.Item
-              label={strings.PAGES_REGISTER_FORM_EMAIL_LABEL}
+              label={strings.REGISTER_FORM_EMAIL_LABEL}
               htmlFor="email"
               name="email"
               className="d-block"
               rules={[
                 {
                   required: true,
-                  message: strings.PAGES_REGISTER_FORM_EMAIL_REQUIRED_MESSAGE,
+                  message: strings.REGISTER_FORM_EMAIL_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input
                 id="email"
                 type="email"
-                placeholder={strings.PAGES_REGISTER_FORM_EMAIL_PLACEHOLDER}
+                placeholder={strings.REGISTER_FORM_EMAIL_PLACEHOLDER}
               />
             </Form.Item>
             <Form.Item
-              label={strings.PAGES_REGISTER_FORM_PASSWORD_LABEL}
+              label={strings.REGISTER_FORM_PASSWORD_LABEL}
               htmlFor="password"
               name="password"
               className="d-block"
               rules={[
                 {
                   required: true,
-                  message:
-                    strings.PAGES_REGISTER_FORM_PASSWORD_REQUIRED_MESSAGE,
+                  message: strings.REGISTER_FORM_PASSWORD_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input.Password
                 id="password"
                 type="password"
-                placeholder={strings.PAGES_REGISTER_FORM_PASSWORD_PLACEHOLDER}
+                placeholder={strings.REGISTER_FORM_PASSWORD_PLACEHOLDER}
               />
             </Form.Item>
             <Form.Item
-              label={strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_LABEL}
+              label={strings.REGISTER_FORM_REGISTER_AS_PARTNER_LABEL}
               htmlFor="role"
               name="role"
               className="d-block text-center"
@@ -91,16 +90,16 @@ const Register = () => {
                 {
                   required: true,
                   message:
-                    strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_REQUIRED_MESSAGE,
+                    strings.REGISTER_FORM_REGISTER_AS_PARTNER_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Radio.Group>
                 <Radio value={"user"}>
-                  {strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_OPTION_NO}
+                  {strings.REGISTER_FORM_REGISTER_AS_PARTNER_OPTION_NO}
                 </Radio>
                 <Radio value={"partner"}>
-                  {strings.PAGES_REGISTER_FORM_REGISTER_AS_PARTNER_OPTION_YES}
+                  {strings.REGISTER_FORM_REGISTER_AS_PARTNER_OPTION_YES}
                 </Radio>
               </Radio.Group>
             </Form.Item>
@@ -111,15 +110,15 @@ const Register = () => {
                 htmlType="submit"
                 style={{ fontSize: "1rem", fontWeight: "600" }}
               >
-                {strings.PAGES_REGISTER_FORM_SUBMIT_BUTTON}
+                {strings.REGISTER_FORM_SUBMIT_BUTTON}
               </Button>
             </Form.Item>
           </Form>
         </section>
         <section>
           <p>
-            {strings.PAGES_REGISTER_ALREADY_A_USER}{" "}
-            <Link to={Paths.Login}>{strings.PAGES_REGISTER_LOGIN_NOW}</Link>
+            {strings.REGISTER_ALREADY_A_USER}{" "}
+            <Link to={Paths.Login}>{strings.REGISTER_LOGIN_NOW}</Link>
           </p>
         </section>
       </main>

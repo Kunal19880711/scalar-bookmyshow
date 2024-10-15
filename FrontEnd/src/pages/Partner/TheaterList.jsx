@@ -39,36 +39,36 @@ const TheaterList = () => {
 
   const tableHeading = [
     {
-      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_NAME,
+      title: strings.THEATERLIST_TABLEHEADING_NAME,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_ADDRESS,
+      title: strings.THEATERLIST_TABLEHEADING_ADDRESS,
       dataIndex: "address",
       key: "address",
     },
     {
-      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_PHONE,
+      title: strings.THEATERLIST_TABLEHEADING_PHONE,
       dataIndex: "phone",
       key: "phone",
     },
     {
-      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_EMAIL,
+      title: strings.THEATERLIST_TABLEHEADING_EMAIL,
       dataIndex: "email",
       key: "email",
     },
     {
-      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_STATUS,
+      title: strings.THEATERLIST_TABLEHEADING_STATUS,
       dataIndex: "isActive",
       key: "isActive",
       render: (isActive) =>
         isActive
-          ? strings.PAGES_PARTNER_THEATERLIST_STATUS_ACTIVE
-          : strings.PAGES_PARTNER_THEATERLIST_STATUS_INACTIVE,
+          ? strings.THEATERLIST_STATUS_ACTIVE
+          : strings.THEATERLIST_STATUS_INACTIVE,
     },
     {
-      title: strings.PAGES_PARTNER_THEATERLIST_TABLEHEADING_ACTIONS,
+      title: strings.THEATERLIST_TABLEHEADING_ACTIONS,
       dataIndex: "actions",
       key: "actions",
       render: (text, data) => (
@@ -105,7 +105,7 @@ const TheaterList = () => {
             setFormType("add");
           }}
         >
-          {strings.PAGES_PARTNER_THEATERLIST_ADD_THEATER}
+          {strings.THEATERLIST_ADD_THEATER}
         </Button>
       </div>
       <Table columns={tableHeading} dataSource={theaters} />

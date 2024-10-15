@@ -36,7 +36,7 @@ const MovieList = () => {
 
   const tableHeading = [
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_POSTER,
+      title: strings.MOVIELIST_TABLEHEADING_POSTER,
       dataIndex: "poster",
       key: "poster",
       render: (text, data) => (
@@ -50,39 +50,39 @@ const MovieList = () => {
       ),
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_NAME,
+      title: strings.MOVIELIST_TABLEHEADING_NAME,
       dataIndex: "movieName",
       key: "movieName",
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_DESCRIPTION,
+      title: strings.MOVIELIST_TABLEHEADING_DESCRIPTION,
       dataIndex: "description",
       key: "description",
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_DURATION,
+      title: strings.MOVIELIST_TABLEHEADING_DURATION,
       dataIndex: "duration",
       key: "duration",
       render: (text) => `${text} min`,
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_GENRE,
+      title: strings.MOVIELIST_TABLEHEADING_GENRE,
       dataIndex: "genre",
       key: "genre",
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_LANGUAGE,
+      title: strings.MOVIELIST_TABLEHEADING_LANGUAGE,
       dataIndex: "language",
       key: "language",
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_RELEASEDATE,
+      title: strings.MOVIELIST_TABLEHEADING_RELEASEDATE,
       dataIndex: "releaseDate",
       key: "releaseDate",
       render: (text, data) => moment(data.releaseDate).format("MM-DD-YYYY"),
     },
     {
-      title: strings.PAGES_ADMIN_MOVIELIST_TABLEHEADING_ACTIONS,
+      title: strings.MOVIELIST_TABLEHEADING_ACTIONS,
       key: "actions",
       render: (text, data) => (
         <div>
@@ -121,7 +121,7 @@ const MovieList = () => {
             setSelectedMovie(null);
           }}
         >
-          {strings.PAGES_ADMIN_MOVIELIST_ADD_MOVIE}
+          {strings.MOVIELIST_ADD_MOVIE}
         </Button>
       </div>
       <Table columns={tableHeading} dataSource={movies} />

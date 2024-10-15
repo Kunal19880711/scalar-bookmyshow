@@ -16,9 +16,10 @@ const MovieForm = ({
   formType,
 }) => {
   const dispatch = useDispatch();
-  const formTitle = formType === "edit"
-    ? strings.PAGES_ADMIN_MOVIEFORM_HEADING_EDIT_MOVIE
-    : strings.PAGES_ADMIN_MOVIEFORM_HEADING_ADD_MOVIE;
+  const formTitle =
+    formType === "edit"
+      ? strings.MOVIEFORM_HEADING_EDIT_MOVIE
+      : strings.MOVIEFORM_HEADING_ADD_MOVIE;
 
   if (selectedMovie) {
     selectedMovie.releaseDate = moment(selectedMovie.releaseDate).format(
@@ -51,7 +52,7 @@ const MovieForm = ({
         handleCancel();
       } else {
         message.error(response.message);
-      } 
+      }
     } catch (err) {
       message.error(err?.message);
     } finally {
@@ -71,40 +72,34 @@ const MovieForm = ({
         <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
           <Col span={24}>
             <Form.Item
-              label={strings.PAGES_ADMIN_MOVIEFORM_FORM_MOVIE_NAME_LABEL}
+              label={strings.MOVIEFORM_FORM_MOVIE_NAME_LABEL}
               name="movieName"
               rules={[
                 {
                   required: true,
-                  message:
-                    strings.PAGES_ADMIN_MOVIEFORM_FORM_MOVIE_NAME_REQUIRED_MESSAGE,
+                  message: strings.MOVIEFORM_FORM_MOVIE_NAME_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input
-                placeholder={
-                  strings.PAGES_ADMIN_MOVIEFORM_FORM_MOVIE_NAME_PLACEHOLDER
-                }
+                placeholder={strings.MOVIEFORM_FORM_MOVIE_NAME_PLACEHOLDER}
               />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
-              label={strings.PAGES_ADMIN_MOVIEFORM_FORM_DESCRIPTION_LABEL}
+              label={strings.MOVIEFORM_FORM_DESCRIPTION_LABEL}
               name="description"
               rules={[
                 {
                   required: true,
-                  message:
-                    strings.PAGES_ADMIN_MOVIEFORM_FORM_DESCRIPTION_REQUIRED_MESSAGE,
+                  message: strings.MOVIEFORM_FORM_DESCRIPTION_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <TextArea
                 rows="4"
-                placeholder={
-                  strings.PAGES_ADMIN_MOVIEFORM_FORM_DESCRIPTION_PLACEHOLDER
-                }
+                placeholder={strings.MOVIEFORM_FORM_DESCRIPTION_PLACEHOLDER}
               />
             </Form.Item>
           </Col>
@@ -112,42 +107,37 @@ const MovieForm = ({
             <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
               <Col span={8}>
                 <Form.Item
-                  label={
-                    strings.PAGES_ADMIN_MOVIEFORM_FORM_MOVIE_DURATION_LABEL
-                  }
+                  label={strings.MOVIEFORM_FORM_MOVIE_DURATION_LABEL}
                   name="duration"
                   rules={[
                     {
                       required: true,
                       message:
-                        strings.PAGES_ADMIN_MOVIEFORM_FORM_MOVIE_DURATION_REQUIRED_MESSAGE,
+                        strings.MOVIEFORM_FORM_MOVIE_DURATION_REQUIRED_MESSAGE,
                     },
                   ]}
                 >
                   <Input
                     type="number"
                     placeholder={
-                      strings.PAGES_ADMIN_MOVIEFORM_FORM_MOVIE_DURATION_PLACEHOLDER
+                      strings.MOVIEFORM_FORM_MOVIE_DURATION_PLACEHOLDER
                     }
                   />
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item
-                  label={strings.PAGES_ADMIN_MOVIEFORM_FORM_LANGUAGE_LABEL}
+                  label={strings.MOVIEFORM_FORM_LANGUAGE_LABEL}
                   name="language"
                   rules={[
                     {
                       required: true,
-                      message:
-                        strings.PAGES_ADMIN_MOVIEFORM_FORM_LANGUAGE_REQUIRED_MESSAGE,
+                      message: strings.MOVIEFORM_FORM_LANGUAGE_REQUIRED_MESSAGE,
                     },
                   ]}
                 >
                   <Select
-                    placeholder={
-                      strings.PAGES_ADMIN_MOVIEFORM_FORM_LANGUAGE_PLACEHOLDER
-                    }
+                    placeholder={strings.MOVIEFORM_FORM_LANGUAGE_PLACEHOLDER}
                     options={[
                       { value: "English", label: "English" },
                       { value: "Hindi", label: "Hindi" },
@@ -161,13 +151,13 @@ const MovieForm = ({
               </Col>
               <Col span={8}>
                 <Form.Item
-                  label={strings.PAGES_ADMIN_MOVIEFORM_FORM_RELEASE_DATE_LABEL}
+                  label={strings.MOVIEFORM_FORM_RELEASE_DATE_LABEL}
                   name="releaseDate"
                   rules={[
                     {
                       required: true,
                       message:
-                        strings.PAGES_ADMIN_MOVIEFORM_FORM_RELEASE_DATE_REQUIRED_MESSAGE,
+                        strings.MOVIEFORM_FORM_RELEASE_DATE_REQUIRED_MESSAGE,
                     },
                   ]}
                 >
@@ -180,20 +170,17 @@ const MovieForm = ({
             <Row gutter={{ xs: 6, sm: 10, md: 12, lg: 16 }}>
               <Col span={8}>
                 <Form.Item
-                  label={strings.PAGES_ADMIN_MOVIEFORM_FORM_GENRE_LABEL}
+                  label={strings.MOVIEFORM_FORM_GENRE_LABEL}
                   name="genre"
                   rules={[
                     {
                       required: true,
-                      message:
-                        strings.PAGES_ADMIN_MOVIEFORM_FORM_GENRE_REQUIRED_MESSAGE,
+                      message: strings.MOVIEFORM_FORM_GENRE_REQUIRED_MESSAGE,
                     },
                   ]}
                 >
                   <Select
-                    placeholder={
-                      strings.PAGES_ADMIN_MOVIEFORM_FORM_GENRE_PLACEHOLDER
-                    }
+                    placeholder={strings.MOVIEFORM_FORM_GENRE_PLACEHOLDER}
                     options={[
                       { value: "Action", label: "Action" },
                       { value: "Comedy", label: "Comedy" },
@@ -209,20 +196,17 @@ const MovieForm = ({
               </Col>
               <Col span={16}>
                 <Form.Item
-                  label={strings.PAGES_ADMIN_MOVIEFORM_FORM_POSTER_LABEL}
+                  label={strings.MOVIEFORM_FORM_POSTER_LABEL}
                   name="poster"
                   rules={[
                     {
                       required: true,
-                      message:
-                        strings.PAGES_ADMIN_MOVIEFORM_FORM_POSTER_REQUIRED_MESSAGE,
+                      message: strings.MOVIEFORM_FORM_POSTER_REQUIRED_MESSAGE,
                     },
                   ]}
                 >
                   <Input
-                    placeholder={
-                      strings.PAGES_ADMIN_MOVIEFORM_FORM_POSTER_PLACEHOLDER
-                    }
+                    placeholder={strings.MOVIEFORM_FORM_POSTER_PLACEHOLDER}
                   />
                 </Form.Item>
               </Col>
@@ -236,10 +220,10 @@ const MovieForm = ({
             htmlType="submit"
             style={{ fontSize: "1rem", fontWeight: "600" }}
           >
-            {strings.PAGES_ADMIN_MOVIEFORM_FORM_SUBMIT_BUTTON}
+            {strings.MOVIEFORM_FORM_SUBMIT_BUTTON}
           </Button>
           <Button className="mt-3" block onClick={handleCancel}>
-            {strings.PAGES_ADMIN_MOVIEFORM_FORM_CANCEL_BUTTON}
+            {strings.MOVIEFORM_FORM_CANCEL_BUTTON}
           </Button>
         </Form.Item>
       </Form>

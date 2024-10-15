@@ -24,44 +24,44 @@ const Login = () => {
     <header className="App-header">
       <main className="main-area mw-500 text-center px-3">
         <section>
-          <h1>{strings.PAGES_LOGIN_HEADING}</h1>
+          <h1>{strings.LOGIN_HEADING}</h1>
         </section>
         <section>
           <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
-              label={strings.PAGES_LOGIN_FORM_EMAIL_LABEL}
+              label={strings.LOGIN_FORM_EMAIL_LABEL}
               htmlFor="email"
               name="email"
               className="d-block"
               rules={[
                 {
                   required: true,
-                  message: strings.PAGES_LOGIN_FORM_EMAIL_REQUIRED_MESSAGE,
+                  message: strings.LOGIN_FORM_EMAIL_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input
                 id="email"
                 type="email"
-                placeholder={strings.PAGES_LOGIN_FORM_EMAIL_PLACEHOLDER}
+                placeholder={strings.LOGIN_FORM_EMAIL_PLACEHOLDER}
               />
             </Form.Item>
             <Form.Item
-              label={strings.PAGES_LOGIN_FORM_PASSWORD_LABEL}
+              label={strings.LOGIN_FORM_PASSWORD_LABEL}
               htmlFor="password"
               name="password"
               className="d-block"
               rules={[
                 {
                   required: true,
-                  message: strings.PAGES_LOGIN_FORM_PASSWORD_REQUIRED_MESSAGE,
+                  message: strings.LOGIN_FORM_PASSWORD_REQUIRED_MESSAGE,
                 },
               ]}
             >
               <Input.Password
                 id="password"
                 type="password"
-                placeholder={strings.PAGES_LOGIN_FORM_PASSWORD_PLACEHOLDER}
+                placeholder={strings.LOGIN_FORM_PASSWORD_PLACEHOLDER}
               />
             </Form.Item>
             <Form.Item>
@@ -71,15 +71,15 @@ const Login = () => {
                 htmlType="submit"
                 style={{ fontSize: "1rem", fontWeight: "600" }}
               >
-                {strings.PAGES_LOGIN_FORM_SUBMIT_BUTTON}
+                {strings.LOGIN_FORM_SUBMIT_BUTTON}
               </Button>
             </Form.Item>
           </Form>
         </section>
         <section>
           <p>
-            {strings.PAGES_LOGIN_NEW_USER}{" "}
-            <Link to={Paths.Register}>{strings.PAGES_LOGIN_REGISTER_NOW}</Link>
+            {strings.LOGIN_NEW_USER}{" "}
+            <Link to={Paths.Register}>{strings.LOGIN_REGISTER_NOW}</Link>
           </p>
         </section>
       </main>

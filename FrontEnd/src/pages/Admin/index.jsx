@@ -8,12 +8,12 @@ const Admin = () => {
   const tabItems = [
     {
       key: "movies",
-      label: strings.PAGES_ADMIN_TABS_MOVIES,
+      label: strings.ADMIN_TABS_MOVIES,
       children: <MovieList />,
     },
     {
       key: "theaters",
-      label: strings.PAGES_ADMIN_TABS_THEATERS,
+      label: strings.ADMIN_TABS_THEATERS,
       children: <TheatreTable />,
     },
   ];

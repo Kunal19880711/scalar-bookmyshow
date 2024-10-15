@@ -19,7 +19,7 @@ const NavBar = ({ children }) => {
 
   const navItems = [
     {
-      label: strings.COMPONENT_NAVBAR_NAVITEMS_HOME,
+      label: strings.NAVBAR_NAVITEMS_HOME,
       icon: <HomeOutlined />,
       key: "home",
       onClick: () => navigate(Paths.Home),
@@ -29,7 +29,7 @@ const NavBar = ({ children }) => {
       icon: <UserOutlined />,
       children: [
         {
-          label: strings.COMPONENT_NAVBAR_NAVITEMS_MY_PROFILE,
+          label: strings.NAVBAR_NAVITEMS_MY_PROFILE,
           icon: <ProfileOutlined />,
           key: "profile",
           onClick: () => {
@@ -43,7 +43,7 @@ const NavBar = ({ children }) => {
           },
         },
         {
-          label: strings.COMPONENT_NAVBAR_NAVITEMS_LOGOUT,
+          label: strings.NAVBAR_NAVITEMS_LOGOUT,
           icon: <LogoutOutlined />,
           key: "logout",
           onClick: () => {
@@ -61,7 +61,7 @@ const NavBar = ({ children }) => {
         style={{ position: "sticky", top: 0, zIndex: 1, width: "100%" }}
       >
         <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
-          {strings.COMPONENT_NAVBAR_HEADING}
+          {strings.NAVBAR_HEADING}
         </h3>
         <Menu theme="dark" mode="horizontal" items={navItems} />
       </Layout.Header>
