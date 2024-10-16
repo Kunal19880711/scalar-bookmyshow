@@ -109,6 +109,8 @@ const strings = new LocalizedStrings({
     REGISTER_FORM_SUBMIT_BUTTON: "Register",
     REGISTER_ALREADY_A_USER: "Already a user ?",
     REGISTER_LOGIN_NOW: "Login Now",
+
+    RELOAD: "Reload",
   },
 });
 

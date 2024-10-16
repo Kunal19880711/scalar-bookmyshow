@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Table, message } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { GetAllTheaters } from "../../api/theater";
 import strings from "../../constants/l10n";
@@ -97,7 +97,7 @@ const TheaterList = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end gap-10">
         <Button
           onClick={() => {
             setIsModalOpen(true);
@@ -106,6 +106,9 @@ const TheaterList = () => {
           }}
         >
           {strings.THEATERLIST_ADD_THEATER}
+        </Button>
+        <Button icon={<ReloadOutlined />} onClick={getData}>
+          {strings.RELOAD}
         </Button>
       </div>
       <Table columns={tableHeading} dataSource={theaters} />

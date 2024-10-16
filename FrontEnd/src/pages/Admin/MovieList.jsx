@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { Button, Table, message } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 
 import strings from "../../constants/l10n";
@@ -113,7 +113,7 @@ const MovieList = () => {
   }, []);
   return (
     <div>
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end gap-10">
         <Button
           onClick={() => {
             setIsModalOpen(true);
@@ -122,6 +122,9 @@ const MovieList = () => {
           }}
         >
           {strings.MOVIELIST_ADD_MOVIE}
+        </Button>
+        <Button icon={<ReloadOutlined />} onClick={getData}>
+          {strings.RELOAD}
         </Button>
       </div>
       <Table columns={tableHeading} dataSource={movies} />
