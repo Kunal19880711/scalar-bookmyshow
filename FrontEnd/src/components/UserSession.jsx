@@ -4,6 +4,7 @@ import { logout, setToken, setUser, setInitializing } from "../redux/userSlice";
 import { hideLoading, showLoading } from "../redux/loaderSlice";
 import { GetCurrentUser } from "../api/user";
 import { message } from "antd";
+import { setLogoutInterceptor } from "../api";
 
 const UserSession = ({ children }) => {
   const { user, token, initializing } = useSelector((store) => store.user);
@@ -52,6 +53,19 @@ const UserSession = ({ children }) => {
       dispatch(setInitializing(false));
     }
   }, []);
+
+  // setting logout interceptor
+  useEffect(() => {
+    if (initializing) {
+      return;
+    }
+    setLogoutInterceptor(() => {
+      if (user) {
+        dispatch(logout());
+      }
+    });
+  }, [initializing]);
+
   return <>{children}</>;
 };
 
