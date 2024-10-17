@@ -1,3 +1,4 @@
+const HttpError = require("../common/HttpError");
 const httpStatusMessage = require("../common/httpStatusMessage");
 
 module.exports = function handleError(error, req, res, next) {

@@ -1,7 +1,7 @@
 const HttpError = require("../common/HttpError");
 const Theater = require("../models/theaterSchema");
 
-const addTheater = async (req, res) => {
+const addTheater = async (req, res, next) => {
   try {
     const newTheater = new Theater(req.body);
     const savedTheater = await newTheater.save();
@@ -11,11 +11,11 @@ const addTheater = async (req, res) => {
       message: "Theater has been added successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
 
-const getAllTheaters = async (req, res) => {
+const getAllTheaters = async (req, res, next) => {
   try {
     const allTheaters = await Theater.find().populate("owner");
     res.status(200).json({
@@ -24,11 +24,11 @@ const getAllTheaters = async (req, res) => {
       message: "All Theaters has been fetched successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
 
-const getAllTheatersByOwner = async (req, res) => {
+const getAllTheatersByOwner = async (req, res, next) => {
   try {
     const allTheatersByOwner = await Theater.find({ owner: req?.body?.userId });
     res.status(200).json({
@@ -37,11 +37,11 @@ const getAllTheatersByOwner = async (req, res) => {
       message: "All Theaters has been fetched successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
 
-const updateTheater = async (req, res) => {
+const updateTheater = async (req, res, next) => {
   try {
     const updatedTheater = await Theater.findByIdAndUpdate(
       req.body.theaterId,
@@ -57,11 +57,11 @@ const updateTheater = async (req, res) => {
       message: "Theater has been updated successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
 
-const deleteTheater = async (req, res) => {
+const deleteTheater = async (req, res, next) => {
   try {
     const deletedTheater = await Theater.findByIdAndDelete(
       req?.params?.theaterId
@@ -75,7 +75,7 @@ const deleteTheater = async (req, res) => {
       message: "Theater has been deleted successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
 

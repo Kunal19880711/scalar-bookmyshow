@@ -1,7 +1,7 @@
 const HttpError = require("../common/HttpError");
 const Movie = require("../models/movieSchema");
 
-const addMovie = async (req, res) => {
+const addMovie = async (req, res, next) => {
   try {
     const movie = new Movie(req?.body);
     await movie.save();
@@ -11,10 +11,10 @@ const addMovie = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
-const getAllTheMovies = async (req, res) => {
+const getAllTheMovies = async (req, res, next) => {
   try {
     const allMovies = await Movie.find();
     res.status(200).json({
@@ -23,10 +23,10 @@ const getAllTheMovies = async (req, res) => {
       message: "All Movies has been fetched successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
-const updateMovie = async (req, res) => {
+const updateMovie = async (req, res, next) => {
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(
       req?.body?.movieId,
@@ -42,10 +42,10 @@ const updateMovie = async (req, res) => {
       message: "The Movie has been updated successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
-const deleteMovie = async (req, res) => {
+const deleteMovie = async (req, res, next) => {
   try {
     const deletedMovie = await Movie.findByIdAndDelete(req?.params?.movieId);
     if(!deletedMovie) {
@@ -57,7 +57,7 @@ const deleteMovie = async (req, res) => {
       message: "The Movie has been deleted successfully.",
     });
   } catch (error) {
-    throw error;
+    next(error);
   }
 };
 

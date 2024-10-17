@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const userRoute = require("./routes/userRoute");
 const movieRoute = require("./routes/movieRoute");
 const theaterRoute = require("./routes/theaterRoute");
+const showRoute = require("./routes/showRoute");
 const handleMongooseError = require("./middleware/handleMongooseError");
 const handleError = require("./middleware/handleError");
 const validateJWTToken = require("./middleware/validateJWTToken");
@@ -21,6 +22,7 @@ if(process.env.SESSION_COOKIE_NAME) {
 app.use('/bms/users', userRoute);
 app.use('/bms/movies', validateJWTToken, movieRoute);
 app.use("/bms/theaters", validateJWTToken, theaterRoute);
+app.use("/bms/shows", validateJWTToken, showRoute);
 
 app.use(handleMongooseError);
 app.use(handleError);

@@ -2,7 +2,7 @@ const User = require("../models/userSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
   try {
     // TODO: proper handling of scenario if email not provided
     const userExists = await User.findOne({ email: req?.body?.email });
@@ -26,13 +26,11 @@ const registerUser = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    // TODO: middleware error handling
-    // res.status(500).json({ message: error.message });
-    throw error;
+    next(error);
   }
 };
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   try {
     // TODO: proper handling of scenario if email not provided
     const userExists = await User.findOne({ email: req?.body?.email });
@@ -69,39 +67,36 @@ const loginUser = async (req, res) => {
     const response = {
       message: "You have successfully logged in.",
       success: true,
-    }
-    if(process.env.SESSION_COOKIE_NAME) {
+    };
+    if (process.env.SESSION_COOKIE_NAME) {
       res.cookie(process.env.SESSION_COOKIE_NAME, token, {
         maxAge: process.env.SESSION_COOKIE_MAX_AGE || 24 * 60 * 60 * 1000,
         httpOnly: true,
-      })
+      });
     } else {
-      response.data = token
+      response.data = token;
     }
     return res.status(200).json(response);
   } catch (error) {
-    // res.status(500).json({ message: error.message });
-    throw error;
+    next(error);
   }
 };
 
-const currentUser = async (req, res) => {
+const currentUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req?.body?.user.userId).select("-password");
-    res
-      .status(200)
-      .json({
-        data: user,
-        success: true,
-        message: "User details fetched successfully.",
-      });
+    const user = await User.findById(req?.body?.user.userId).select(
+      "-password"
+    );
+    res.status(200).json({
+      data: user,
+      success: true,
+      message: "User details fetched successfully.",
+    });
   } catch (error) {
-    // res.status(500).json({ message: error.message });
-    throw error;
+    next(error);
   }
 };
 
 module.exports = { registerUser, loginUser, currentUser };
 
-// TODO: middleware to check Authentication of user
 // TODO: middleware to check Authorization of user
