@@ -32,11 +32,11 @@ const getAllShowsByTheater = async (req, res, next) => {
 const getAllShowsByMovie = async (req, res, next) => {
   try {
     const shows = await Show.find({
-      movieId: req?.body?.movieId,
-      date: req?.body?.date,
+      movie: req?.body?.movieId,
+      // date: req?.body?.date,
     }).populate("theater");
     res.status(200).json({
-      data: shows,
+      data: marshalShowByMovie(shows),
       success: true,
       message: "Shows fetched successfully.",
     });
@@ -44,6 +44,20 @@ const getAllShowsByMovie = async (req, res, next) => {
     next(error);
   }
 };
+
+function marshalShowByMovie(shows) {
+  const theaterIdMap = new Map();
+  for (let show of shows) {
+    const { theater } = show;
+    show.theater = theater._id;
+    if (!theaterIdMap.has(theater._id)) {
+      theaterIdMap.set(theater._id, { ...theater._doc, shows: [show] });
+    } else {
+      theaterIdMap.get(theater._id).shows.push(show);
+    }
+  }
+  return [...theaterIdMap.values()];
+}
 
 const getShowsById = async (req, res, next) => {
   try {
