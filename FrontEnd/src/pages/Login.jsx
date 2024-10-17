@@ -17,7 +17,7 @@ const Login = () => {
         dispatch(setToken(response?.data));
       }
     } catch (err) {
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     }
   };
   return (

@@ -1,6 +1,5 @@
-import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
+import { Col, Modal, Row, Form, Input, Button, message } from "antd";
 import React from "react";
-import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
@@ -49,7 +48,7 @@ const TheaterForm = ({
         message.error(response?.message);
       }
     } catch (err) {
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     } finally {
       dispatch(hideLoading());
     }

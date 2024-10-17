@@ -54,7 +54,7 @@ const MovieForm = ({
         message.error(response.message);
       }
     } catch (err) {
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     } finally {
       dispatch(hideLoading());
     }

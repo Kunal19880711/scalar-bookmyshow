@@ -20,7 +20,7 @@ const TheatreTable = () => {
       setTheaters(allTheaters);
       dispatch(hideLoading());
     } catch (err) {
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     } finally {
       dispatch(hideLoading());
     }
@@ -30,15 +30,15 @@ const TheatreTable = () => {
       dispatch(showLoading());
       const response = await UpdateTheater({
         theaterId: theater._id,
-        isActive: !theater.isActive
+        isActive: !theater.isActive,
       });
-      if(response.success) {
+      if (response.success) {
         getData();
       } else {
         message.error(response.message);
       }
     } catch (err) {
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     } finally {
       dispatch(hideLoading());
     }

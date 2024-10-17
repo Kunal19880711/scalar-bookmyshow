@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Table, message } from "antd";
-import { DeleteOutlined, EditOutlined, ReloadOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
+import { GetAllMovies } from "../../api/movie";
 import { GetAllTheaters } from "../../api/theater";
 import strings from "../../constants/l10n";
 import TheaterForm from "./TheaterForm";
 import DeleteTheaterModal from "./DeleteTheaterModal";
+import ShowList from "./ShowList";
 
 const TheaterList = () => {
+  const [movies, setMovies] = useState([]);
   const [theaters, setTheaters] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -18,15 +26,21 @@ const TheaterList = () => {
   const getData = async () => {
     try {
       dispatch(showLoading());
+      const movieResponse = await GetAllMovies();
+      const allMovies = movieResponse?.data.map((movie) => ({
+        ...movie,
+        key: movie._id,
+      }));
       const response = await GetAllTheaters();
       const allTheaters = response?.data.map((theater) => ({
         ...theater,
         key: theater._id,
       }));
+      setMovies(allMovies);
       setTheaters(allTheaters);
       dispatch(hideLoading());
     } catch (err) {
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     } finally {
       dispatch(hideLoading());
     }
@@ -57,6 +71,7 @@ const TheaterList = () => {
       dataIndex: "email",
       key: "email",
     },
+    Table.EXPAND_COLUMN,
     {
       title: strings.THEATERLIST_TABLEHEADING_STATUS,
       dataIndex: "isActive",
@@ -89,16 +104,35 @@ const TheaterList = () => {
           >
             <DeleteOutlined />
           </Button>
-          {data.isActive && <Button>+ Shows</Button>}
         </div>
       ),
     },
   ];
 
+  const expandableConfig = {
+    expandedRowRender: (theater) => (
+      <div className="card">
+        <ShowList theater={theater} movies={movies} />
+      </div>
+    ),
+    expandIcon: ({ onExpand, record }) =>
+      record.isActive && (
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={(e) => onExpand(record, e)}
+        >
+          {strings.THEATERLIST_ACTION_SHOWS}
+        </Button>
+      ),
+    rowExpandable: (theater) => theater.isActive,
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-end gap-10">
         <Button
+          type="primary"
           onClick={() => {
             setIsModalOpen(true);
             setSelectedTheater(null);
@@ -111,7 +145,11 @@ const TheaterList = () => {
           {strings.RELOAD}
         </Button>
       </div>
-      <Table columns={tableHeading} dataSource={theaters} />
+      <Table
+        columns={tableHeading}
+        dataSource={theaters}
+        expandable={expandableConfig}
+      />
       {isModalOpen && (
         <TheaterForm
           isModalOpen={isModalOpen}

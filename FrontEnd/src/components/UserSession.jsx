@@ -18,7 +18,7 @@ const UserSession = ({ children }) => {
       dispatch(hideLoading());
     } catch (err) {
       dispatch(hideLoading());
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
       dispatch(logout());
     } finally {
       dispatch(hideLoading());

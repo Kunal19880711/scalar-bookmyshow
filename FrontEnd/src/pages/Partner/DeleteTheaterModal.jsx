@@ -30,7 +30,7 @@ const DeleteTheaterModal = ({
     } catch (err) {
       dispatch(hideLoading());
       setIsDeleteModalOpen(false);
-      message.error(err?.message);
+      message.error(err?.response?.data?.message || err?.message);
     }
   };
 
@@ -46,7 +46,9 @@ const DeleteTheaterModal = ({
       onOk={handleOk}
       onCancel={handleCancel}
     >
-      <p className="pt-3 fs-18">Are you sure you want to delete this theater?</p>
+      <p className="pt-3 fs-18">
+        Are you sure you want to delete this theater?
+      </p>
       <p className="pb-3 fs-18">
         This action can't be undone and you'll lose this theater data.
       </p>
@@ -55,4 +57,3 @@ const DeleteTheaterModal = ({
 };
 
 export default DeleteTheaterModal;
-
