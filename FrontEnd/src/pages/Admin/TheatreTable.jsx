@@ -5,9 +5,11 @@ import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { GetAllTheaters, UpdateTheater } from "../../api/theater";
 import strings from "../../constants/l10n";
 import { useGetData } from "../../hooks/useGetData";
+import { useDispatch } from "react-redux";
 
 const TheatreTable = () => {
   const { entities: theaters, getData } = useGetData(GetAllTheaters);
+  const dispatch = useDispatch();
   const toggleStatus = async (theater) => {
     try {
       dispatch(showLoading());
