@@ -60,7 +60,11 @@ const NavBar = ({ children }) => {
         className="d-flex justify-content-between"
         style={{ position: "sticky", top: 0, zIndex: 1, width: "100%" }}
       >
-        <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
+        <h3
+          className="demo-logo text-white m-0"
+          style={{ color: "white", cursor: "pointer" }}
+          onClick={() => navigate(Paths.Home)}
+        >
           {strings.NAVBAR_HEADING}
         </h3>
         <Menu theme="dark" mode="horizontal" items={navItems} />
