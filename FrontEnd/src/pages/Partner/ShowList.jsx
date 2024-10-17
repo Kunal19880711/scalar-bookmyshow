@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
@@ -12,35 +12,16 @@ import { GetAllShowsByTheater } from "../../api/show";
 import strings from "../../constants/l10n";
 import ShowForm from "./ShowForm";
 import DeleteShowModal from "./DeleteShowModal";
+import { useGetData } from "../../hooks/useGetData";
 
 const ShowList = ({ theater, movies }) => {
-  const [shows, setShows] = useState([]);
+  const { entities: shows, getData } = useGetData(() =>
+    GetAllShowsByTheater({ theaterId: theater._id })
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedShow, setSelectedShow] = useState(null);
   const [formType, setFormType] = useState("add");
-  const dispatch = useDispatch();
-
-  const getData = async () => {
-    try {
-      dispatch(showLoading());
-      const response = await GetAllShowsByTheater({ theaterId: theater._id });
-      const allShows = response?.data.map((show) => ({
-        ...show,
-        key: show._id,
-      }));
-      setShows(allShows);
-      dispatch(hideLoading());
-    } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   const tableHeading = [
     {
@@ -91,7 +72,7 @@ const ShowList = ({ theater, movies }) => {
           <Button
             onClick={() => {
               setIsModalOpen(true);
-              setSelectedShow({...show, movie: show.movie._id});
+              setSelectedShow({ ...show, movie: show.movie._id });
               setFormType("edit");
             }}
           >

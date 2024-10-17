@@ -1,30 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { Button, Table, message } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { GetAllTheaters, UpdateTheater } from "../../api/theater";
 import strings from "../../constants/l10n";
+import { useGetData } from "../../hooks/useGetData";
 
 const TheatreTable = () => {
-  const [theaters, setTheaters] = useState([]);
-  const dispatch = useDispatch();
-  const getData = async () => {
-    try {
-      dispatch(showLoading());
-      const response = await GetAllTheaters();
-      const allTheaters = response?.data.map((theater) => ({
-        ...theater,
-        key: theater._id,
-      }));
-      setTheaters(allTheaters);
-      dispatch(hideLoading());
-    } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+  const { entities: theaters, getData } = useGetData(GetAllTheaters);
   const toggleStatus = async (theater) => {
     try {
       dispatch(showLoading());
@@ -43,10 +26,6 @@ const TheatreTable = () => {
       dispatch(hideLoading());
     }
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   const tableHeading = [
     {

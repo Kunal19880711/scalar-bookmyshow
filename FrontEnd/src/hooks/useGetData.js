@@ -1,25 +1,31 @@
-import { useState, useEffect } from 'react'
-import axiosInstance from '../api/index'
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { message } from "antd";
+import { showLoading, hideLoading } from "../redux/loaderSlice";
 
-export const useGetData = (url) => {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+export const useGetData = (dataFetcher) => {
+  const dispatch = useDispatch();
+  const [entities, setEntities] = useState([]);
+
+  const getData = async () => {
+    try {
+      dispatch(showLoading());
+      const response = await dataFetcher();
+      const entities = response?.data.map((entity) => ({
+        ...entity,
+        key: entity._id,
+      }));
+      setEntities(entities);
+    } catch (err) {
+      message.error(err?.response?.data?.message || err?.message);
+    } finally {
+      dispatch(hideLoading());
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const response = await axiosInstance.get(url)
-        setData(response.data)
-      } catch (error) {
-        setError(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [url])
+    getData();
+  }, []);
 
-  return { data, loading, error }
-}
+  return { entities, getData };
+};

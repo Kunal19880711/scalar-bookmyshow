@@ -1,42 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import moment from "moment";
-import { Button, Table, message } from "antd";
+import { Button, Table } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { showLoading, hideLoading } from "../../redux/loaderSlice";
 
 import strings from "../../constants/l10n";
 import { GetAllMovies } from "../../api/movie";
 import MovieForm from "./MovieForm";
 import DeleteMovieModal from "./DeleteMovieModal";
+import { useGetData } from "../../hooks/useGetData";
 
 const MovieList = () => {
-  const [movies, setMovies] = useState([]);
+  const {entities: movies, getData} = useGetData(GetAllMovies);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [formType, setFormType] = useState("add");
-  const dispatch = useDispatch();
-  const getData = async () => {
-    try {
-      dispatch(showLoading());
-      const response = await GetAllMovies();
-      const allMovies = response?.data.map((movie) => ({
-        ...movie,
-        key: movie._id,
-      }));
-      setMovies(allMovies);
-      dispatch(hideLoading());
-    } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+
 
   const tableHeading = [
     {
@@ -112,9 +95,6 @@ const MovieList = () => {
     },
   ];
 
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <div>
       <div className="d-flex justify-content-end gap-10">
