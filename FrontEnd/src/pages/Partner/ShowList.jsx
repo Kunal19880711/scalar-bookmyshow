@@ -91,7 +91,7 @@ const ShowList = ({ theater, movies }) => {
           <Button
             onClick={() => {
               setIsModalOpen(true);
-              setSelectedShow(show);
+              setSelectedShow({...show, movie: show.movie._id});
               setFormType("edit");
             }}
           >
