@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { showLoading, hideLoading } from "../../redux/loaderSlice";
-import { Button, Table, message } from "antd";
+import { Button, Table } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { GetAllShowsByTheater } from "../../api/show";
+import { DeleteShow, GetAllShowsByTheater } from "../../api/show";
 import strings from "../../constants/l10n";
 import ShowForm from "./ShowForm";
-import DeleteShowModal from "./DeleteShowModal";
 import { useGetData } from "../../hooks/useGetData";
+import DeleteEntityModal from "../../components/DeleteEntityModal";
 
 const ShowList = ({ theater, movies }) => {
   const { entities: shows, getData } = useGetData(() =>
@@ -44,7 +42,7 @@ const ShowList = ({ theater, movies }) => {
       title: strings.SHOWLIST_TABLEHEADING_MOVIE,
       dataIndex: "movieId",
       key: "movieId",
-      render: (text, data) => data.movie.movieName,
+      render: (text, data) => data.movie?.movieName,
     },
     {
       title: strings.SHOWLIST_TABLEHEADING_TICKET_PRICE,
@@ -72,7 +70,7 @@ const ShowList = ({ theater, movies }) => {
           <Button
             onClick={() => {
               setIsModalOpen(true);
-              setSelectedShow({ ...show, movie: show.movie._id });
+              setSelectedShow({ ...show, movie: show.movie?._id });
               setFormType("edit");
             }}
           >
@@ -122,12 +120,15 @@ const ShowList = ({ theater, movies }) => {
         />
       )}
       {isDeleteModalOpen && (
-        <DeleteShowModal
+        <DeleteEntityModal
           isDeleteModalOpen={isDeleteModalOpen}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          selectedShow={selectedShow}
-          setSelectedShow={setSelectedShow}
+          selectedEntity={selectedShow}
+          setSelectedEntity={setSelectedShow}
           getData={getData}
+          deleteApi={DeleteShow}
+          title="Delete Show?"
+          entityName="show"
         />
       )}
     </div>

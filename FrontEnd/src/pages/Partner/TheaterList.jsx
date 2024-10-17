@@ -9,11 +9,11 @@ import {
 } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 import { GetAllMovies } from "../../api/movie";
-import { GetAllTheaters } from "../../api/theater";
+import { DeleteTheater, GetAllTheaters } from "../../api/theater";
 import strings from "../../constants/l10n";
 import TheaterForm from "./TheaterForm";
-import DeleteTheaterModal from "./DeleteTheaterModal";
 import ShowList from "./ShowList";
+import DeleteEntityModal from "../../components/DeleteEntityModal";
 
 const TheaterList = () => {
   const [movies, setMovies] = useState([]);
@@ -161,12 +161,15 @@ const TheaterList = () => {
         />
       )}
       {isDeleteModalOpen && (
-        <DeleteTheaterModal
+        <DeleteEntityModal
           isDeleteModalOpen={isDeleteModalOpen}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          selectedTheater={selectedTheater}
-          setSelectedTheater={setSelectedTheater}
+          selectedEntity={selectedTheater}
+          setSelectedEntity={setSelectedTheater}
           getData={getData}
+          deleteApi={DeleteTheater}
+          title="Delete Theater?"
+          entityName="theater"
         />
       )}
     </div>

@@ -8,18 +8,17 @@ import {
 } from "@ant-design/icons";
 
 import strings from "../../constants/l10n";
-import { GetAllMovies } from "../../api/movie";
+import { DeleteMovie, GetAllMovies } from "../../api/movie";
 import MovieForm from "./MovieForm";
-import DeleteMovieModal from "./DeleteMovieModal";
 import { useGetData } from "../../hooks/useGetData";
+import DeleteEntityModal from "../../components/DeleteEntityModal";
 
 const MovieList = () => {
-  const {entities: movies, getData} = useGetData(GetAllMovies);
+  const { entities: movies, getData } = useGetData(GetAllMovies);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [formType, setFormType] = useState("add");
-
 
   const tableHeading = [
     {
@@ -124,12 +123,15 @@ const MovieList = () => {
         />
       )}
       {isDeleteModalOpen && (
-        <DeleteMovieModal
+        <DeleteEntityModal
           isDeleteModalOpen={isDeleteModalOpen}
-          selectedMovie={selectedMovie}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          setSelectedMovie={setSelectedMovie}
+          selectedEntity={selectedMovie}
+          setSelectedEntity={setSelectedMovie}
           getData={getData}
+          deleteApi={DeleteMovie}
+          title="Delete Movie?"
+          entityName="movie"
         />
       )}
     </div>
