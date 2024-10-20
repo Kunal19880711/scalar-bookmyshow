@@ -18,6 +18,15 @@ export const UpdateMovie = async (payload) => {
   }
 };
 
+export const GetMovieById = async (movieId) => {
+  try {
+    const response = await axiosInstance.get(`/movies/getMovieById/${movieId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const AddMovie = async (payload) => {
   try {
     const response = await axiosInstance.post("/movies/addMovie", payload);
@@ -27,10 +36,11 @@ export const AddMovie = async (payload) => {
   }
 };
 
-
 export const DeleteMovie = async (movieId) => {
   try {
-    const response = await axiosInstance.delete(`/movies/deleteMovie/${movieId}`);
+    const response = await axiosInstance.delete(
+      `/movies/deleteMovie/${movieId}`
+    );
     return response.data;
   } catch (error) {
     throw error;

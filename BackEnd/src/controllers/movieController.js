@@ -26,6 +26,23 @@ const getAllTheMovies = async (req, res, next) => {
     next(error);
   }
 };
+
+const getMovieById = async (req, res, next) => {
+  try {
+    const movie = await Movie.findById(req?.params?.movieId);
+    if (!movie) {
+      throw new HttpError(404, "Movie not found");
+    }
+    res.status(200).json({
+      data: movie,
+      success: true,
+      message: "Movie fetched successfully.",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const updateMovie = async (req, res, next) => {
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(
@@ -64,6 +81,7 @@ const deleteMovie = async (req, res, next) => {
 module.exports = {
   addMovie,
   getAllTheMovies,
+  getMovieById,
   updateMovie,
   deleteMovie,
 };
