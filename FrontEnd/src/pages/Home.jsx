@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import { Col, Input, Row } from "antd";
+import useData from "../hooks/useData";
+import { GetAllMovies } from "../api/movie";
 import string from "../constants/l10n";
+import { SearchOutlined } from "@ant-design/icons";
 
 const Home = () => {
-  const {}
+  const { entities: movies, getData } = useData(GetAllMovies);
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
+  const filteredMovies = (movies || []).filter((movie) =>
+    movie.movieName.toLowerCase().includes(searchText.toLowerCase())
+  );
   const createMoviePanel = (movie) => (
     <Col
       className="gutter-row mb-5"
@@ -52,7 +63,39 @@ const Home = () => {
       </div>
     </Col>
   );
-  return <></>;
+  const moviePanels = filteredMovies.map(createMoviePanel);
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  return (
+    <>
+      <Row
+        className="justify-content-center w-100"
+        style={{ padding: "20px 15px 20px 0px" }}
+      >
+        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+          <Input
+            placeholder={string.HOME_SEARCH_PLACEHOLDER}
+            onChange={handleSearch}
+            prefix={<SearchOutlined />}
+          />
+        </Col>
+      </Row>
+      <Row
+        className="justify-content-center"
+        gutter={{
+          xs: 8,
+          sm: 16,
+          md: 24,
+          lg: 32,
+        }}
+      >
+        {moviePanels}
+      </Row>
+    </>
+  );
 };
 
 export default Home;

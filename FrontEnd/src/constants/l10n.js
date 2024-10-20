@@ -116,6 +116,8 @@ const strings = new LocalizedStrings({
     ADMIN_TABS_MOVIES: "Movies",
     ADMIN_TABS_THEATERS: "Theaters",
 
+    HOME_SEARCH_PLACEHOLDER: "Type here to search for movies",
+
     LOGIN_HEADING: "Login to Bookmyshow",
     LOGIN_FORM_EMAIL_LABEL: "Email",
     LOGIN_FORM_EMAIL_PLACEHOLDER: "Enter your email",
