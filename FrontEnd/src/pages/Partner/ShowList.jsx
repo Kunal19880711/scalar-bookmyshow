@@ -9,11 +9,11 @@ import {
 import { DeleteShow, GetAllShowsByTheater } from "../../api/show";
 import strings from "../../constants/l10n";
 import ShowForm from "./ShowForm";
-import { useGetData } from "../../hooks/useGetData";
+import useData from "../../hooks/useData";
 import DeleteEntityModal from "../../components/DeleteEntityModal";
 
 const ShowList = ({ theater, movies }) => {
-  const { entities: shows, getData } = useGetData(() =>
+  const { entities: shows, getData } = useData(() =>
     GetAllShowsByTheater({ theaterId: theater._id })
   );
   const [isModalOpen, setIsModalOpen] = useState(false);

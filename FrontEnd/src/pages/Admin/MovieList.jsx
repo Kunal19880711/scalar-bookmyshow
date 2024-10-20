@@ -10,11 +10,11 @@ import {
 import strings from "../../constants/l10n";
 import { DeleteMovie, GetAllMovies } from "../../api/movie";
 import MovieForm from "./MovieForm";
-import { useGetData } from "../../hooks/useGetData";
+import useData from "../../hooks/useData";
 import DeleteEntityModal from "../../components/DeleteEntityModal";
 
 const MovieList = () => {
-  const { entities: movies, getData } = useGetData(GetAllMovies);
+  const { entities: movies, getData } = useData(GetAllMovies);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);

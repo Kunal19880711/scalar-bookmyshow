@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { message } from "antd";
 import { showLoading, hideLoading } from "../redux/loaderSlice";
 
-export const useGetData = (dataFetcher) => {
+const useFetchData = (dataFetcher) => {
   const dispatch = useDispatch();
   const [entities, setEntities] = useState([]);
 
@@ -23,9 +23,7 @@ export const useGetData = (dataFetcher) => {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   return { entities, getData };
 };
+
+export default useFetchData;
