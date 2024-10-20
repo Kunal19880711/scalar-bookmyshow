@@ -1,15 +1,12 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { message } from "antd";
-import { showLoading, hideLoading } from "../redux/loaderSlice";
+import { useEffect } from "react";
 import useFetchData from "./useFetchData";
 
-const useData = (dataFetcher) => {
-  const {entities, getData} = useFetchData(dataFetcher);
+const useData = (dataFetcher, deps = []) => {
+  const { entities, getData } = useFetchData(dataFetcher);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, deps);
 
   return { entities, getData };
 };
