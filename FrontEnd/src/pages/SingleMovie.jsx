@@ -15,7 +15,7 @@ const SingleMovie = () => {
   const { entities: movie } = useData(() => GetMovieById(params.id));
   const { entities: theaters } = useData(
     () => GetAllTheatersByMovie({ movieId: params.id, date }),
-    [date]
+    { deps: [date] }
   );
   const createMoviePath = (date) =>
     Paths.SingleMovie.replace(SubPaths.IdParamFormat, params.id) +
