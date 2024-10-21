@@ -28,7 +28,7 @@ export const DeleteShow = async (id) => {
 
 export const GetShowById = async (payload) => {
   try {
-    const response = await axiosInstance.post('/shows/getShowById', payload);
+    const response = await axiosInstance.post("/shows/getShowById", payload);
     return response.data;
   } catch (error) {
     throw error;
@@ -37,7 +37,10 @@ export const GetShowById = async (payload) => {
 
 export const GetAllShowsByTheater = async (payload) => {
   try {
-    const response = await axiosInstance.post("/shows/getAllShowsByTheater", payload);
+    const response = await axiosInstance.post(
+      "/shows/getAllShowsByTheater",
+      payload
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -46,7 +49,10 @@ export const GetAllShowsByTheater = async (payload) => {
 
 export const GetAllTheatersByMovie = async (payload) => {
   try {
-    const response = await axiosInstance.post("/shows/getAllTheatersByMovie", payload);
+    const response = await axiosInstance.post(
+      "/shows/getAllTheatersByMovie",
+      payload
+    );
     return response.data;
   } catch (error) {
     throw error;
