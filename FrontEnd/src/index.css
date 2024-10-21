@@ -77,9 +77,6 @@ button {
 .gap-10 {
   gap: 10px;
 }
-.d-flex {
-  display: flex;
-}
 .justify-content-between {
   justify-content: space-between;
 }
@@ -112,6 +109,10 @@ table th {
 }
 .fs-18 {
   font-size: 18px;
+}
+
+.d-flex {
+  display: flex;
 }
 .d-none {
   display: none;
