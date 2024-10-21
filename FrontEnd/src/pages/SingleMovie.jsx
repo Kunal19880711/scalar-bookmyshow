@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-import { Divider, Row, Col } from "antd";
+import { Divider, Row, Col, Input } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import useData from "../hooks/useData";
 import { GetMovieById } from "../api/movie";
 import { GetAllTheatersByMovie } from "../api/show";
+import Paths, { SubPaths } from "../constants/Paths";
 
 const SingleMovie = () => {
   const params = useParams();
@@ -16,15 +17,21 @@ const SingleMovie = () => {
     () => GetAllTheatersByMovie({ movieId: params.id, date }),
     [date]
   );
+  const createMoviePath = (date) =>
+    Paths.SingleMovie.replace(SubPaths.IdParamFormat, params.id) +
+    `?date=${date}`;
+  const createBookShowPath = (showId) =>
+    Paths.BookShow.replace(SubPaths.IdParamFormat, showId);
+
   const handleDate = (e) => {
     setDate(moment(e.target.value).format("YYYY-MM-DD"));
-    navigate(`/movie/${params.id}?date=${e.target.value}`);
+    navigate(createMoviePath(e.target.value));
   };
 
   const createSingleShow = (singleShow) => (
     <li
       key={singleShow._id}
-      onClick={() => navigate(`/book-show/${singleShow._id}`)}
+      onClick={() => navigate(createBookShowPath(singleShow._id))}
     >
       {moment(singleShow.time, "HH:mm").format("hh:mm A")}
     </li>

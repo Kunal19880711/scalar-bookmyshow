@@ -6,6 +6,7 @@ import useData from "../hooks/useData";
 import { GetAllMovies } from "../api/movie";
 import string from "../constants/l10n";
 import { SearchOutlined } from "@ant-design/icons";
+import Paths, { SubPaths } from "../constants/Paths";
 
 const Home = () => {
   const { entities: movies, getData } = useData(GetAllMovies);
@@ -14,6 +15,9 @@ const Home = () => {
   const filteredMovies = (movies || []).filter((movie) =>
     movie.movieName.toLowerCase().includes(searchText.toLowerCase())
   );
+  const moviePath =
+    Paths.SingleMovie.replace(SubPaths.IdParamFormat, movie._id) +
+    `?date=${moment().format("YYYY-MM-DD")}`;
   const createMoviePanel = (movie) => (
     <Col
       className="gutter-row mb-5"
@@ -28,9 +32,7 @@ const Home = () => {
       <div className="text-center">
         <img
           onClick={() => {
-            navigate(
-              `/movie/${movie._id}?date=${moment().format("YYYY-MM-DD")}`
-            );
+            navigate(moviePath);
           }}
           className="cursor-pointer"
           src={movie.poster}
@@ -52,9 +54,7 @@ const Home = () => {
         />
         <h3
           onClick={() => {
-            navigate(
-              `/movie/${movie._id}?date=${moment().format("YYYY-MM-DD")}`
-            );
+            navigate(moviePath);
           }}
           className="cursor-pointer"
         >

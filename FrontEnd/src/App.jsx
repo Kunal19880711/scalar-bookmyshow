@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import Paths from "./constants/Paths";
+import Paths, { SubPaths } from "./constants/Paths";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,8 +13,18 @@ import Profile from "./pages/Profile";
 import Partner from "./pages/Partner";
 import UserSession from "./components/UserSession";
 import NotLoggedIn from "./components/NotLoggedIn";
+import SingleMovie from "./pages/SingleMovie";
+import BookShow from "./pages/BookShow";
 
 function App() {
+  const singleMoviePath = Paths.SingleMovie.replace(
+    SubPaths.IdParamFormat,
+    SubPaths.IdParam
+  );
+  const bookShowPath = Paths.BookShow.replace(
+    SubPaths.IdParamFormat,
+    SubPaths.IdParam
+  );
   return (
     <>
       <Provider store={store}>
@@ -50,6 +60,22 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Partner />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={singleMoviePath}
+                element={
+                  <ProtectedRoute>
+                    <SingleMovie />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={bookShowPath}
+                element={
+                  <ProtectedRoute>
+                    <BookShow />
                   </ProtectedRoute>
                 }
               />

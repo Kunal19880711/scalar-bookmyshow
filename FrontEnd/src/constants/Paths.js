@@ -1,3 +1,7 @@
+export const SubPaths = {};
+SubPaths.IdParamFormat = "{id}";
+SubPaths.IdParam = ":id";
+
 const Paths = {
   Login: "/login",
   Register: "/register",
@@ -6,9 +10,8 @@ const Paths = {
   Profile: "/profile",
   Partner: "/partner",
   User: "/user",
-  IdParam: ":id",
-  SingleMovie: "/movie/{id}",
-  BookShow: "/book-show/{id}",
+  SingleMovie: `/movie/${SubPaths.IdParamFormat}`,
+  BookShow: `/book-show/${SubPaths.IdParamFormat}`,
 };
 
 export default Paths;
