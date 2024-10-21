@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import useFetchData from "./useFetchData";
 
-const useData = (dataFetcher, deps = []) => {
-  const { entities, getData } = useFetchData(dataFetcher);
+const defaultOps = { deps: [], defaultValue: [] };
+
+const useData = (dataFetcher, options = {}) => {
+  const { deps, defaultValue } = { ...defaultOps, ...options };
+  const { entities, getData } = useFetchData(dataFetcher, { defaultValue });
 
   useEffect(() => {
     getData();

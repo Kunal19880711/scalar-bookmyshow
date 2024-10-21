@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import { message } from "antd";
 import { showLoading, hideLoading } from "../redux/loaderSlice";
 
-const useFetchData = (dataFetcher) => {
+const defaultOps = { defaultValue: [] };
+
+const useFetchData = (dataFetcher, options = {}) => {
+  const { defaultValue } = { ...defaultOps, ...options };
   const dispatch = useDispatch();
-  const [entities, setEntities] = useState([]);
+  const [entities, setEntities] = useState(defaultValue);
 
   const getData = async () => {
     try {
