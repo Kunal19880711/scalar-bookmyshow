@@ -59,9 +59,9 @@ function marshalShowByMovie(shows) {
   return [...theaterIdMap.values()];
 }
 
-const getShowsById = async (req, res, next) => {
+const getShowById = async (req, res, next) => {
   try {
-    const show = await Show.findById(req?.body?.id)
+    const show = await Show.findById(req?.body?.showId)
       .populate("movie")
       .populate("theater");
     if (!show) {
@@ -118,5 +118,5 @@ module.exports = {
   deleteShow,
   getAllShowsByTheater,
   getAllTheatersByMovie,
-  getShowsById,
+  getShowById,
 };

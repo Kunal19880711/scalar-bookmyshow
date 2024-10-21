@@ -8,6 +8,6 @@ router.patch("/updateShow", showController.updateShow);
 router.delete("/deleteShow/:showId", showController.deleteShow);
 router.post("/getAllShowsByTheater", showController.getAllShowsByTheater);
 router.post("/getAllTheatersByMovie", showController.getAllTheatersByMovie);
-router.post("/getAllShowsById", showController.getShowsById);
+router.post("/getShowById", showController.getShowById);
 
 module.exports = router;
