@@ -11,10 +11,12 @@ const useFetchData = (dataFetcher) => {
     try {
       dispatch(showLoading());
       const response = await dataFetcher();
-      const entities = response?.data.map((entity) => ({
-        ...entity,
-        key: entity._id,
-      }));
+      const entities = Array.isArray(response?.data)
+        ? response?.data.map((entity) => ({
+            ...entity,
+            key: entity._id,
+          }))
+        : response?.data;
       setEntities(entities);
     } catch (err) {
       message.error(err?.response?.data?.message || err?.message);
