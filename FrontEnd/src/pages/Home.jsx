@@ -15,7 +15,7 @@ const Home = () => {
   const filteredMovies = (movies || []).filter((movie) =>
     movie.movieName.toLowerCase().includes(searchText.toLowerCase())
   );
-  const moviePath =
+  const createMoviePath = (movie) =>
     Paths.SingleMovie.replace(SubPaths.IdParamFormat, movie._id) +
     `?date=${moment().format("YYYY-MM-DD")}`;
   const createMoviePanel = (movie) => (
@@ -32,7 +32,7 @@ const Home = () => {
       <div className="text-center">
         <img
           onClick={() => {
-            navigate(moviePath);
+            navigate(createMoviePath(movie));
           }}
           className="cursor-pointer"
           src={movie.poster}
@@ -54,7 +54,7 @@ const Home = () => {
         />
         <h3
           onClick={() => {
-            navigate(moviePath);
+            navigate(createMoviePath(movie));
           }}
           className="cursor-pointer"
         >
