@@ -44,9 +44,9 @@ export const GetAllShowsByTheater = async (payload) => {
   }
 };
 
-export const GetAllShowsByMovie = async (payload) => {
+export const GetAllTheatersByMovie = async (payload) => {
   try {
-    const response = await axiosInstance.post("/shows/getAllShowsByMovie", payload);
+    const response = await axiosInstance.post("/shows/getAllTheatersByMovie", payload);
     return response.data;
   } catch (error) {
     throw error;

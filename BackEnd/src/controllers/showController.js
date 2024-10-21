@@ -29,11 +29,11 @@ const getAllShowsByTheater = async (req, res, next) => {
   }
 };
 
-const getAllShowsByMovie = async (req, res, next) => {
+const getAllTheatersByMovie = async (req, res, next) => {
   try {
     const shows = await Show.find({
       movie: req?.body?.movieId,
-      // date: req?.body?.date,
+      date: req?.body?.date,
     }).populate("theater");
     res.status(200).json({
       data: marshalShowByMovie(shows),
@@ -117,6 +117,6 @@ module.exports = {
   updateShow,
   deleteShow,
   getAllShowsByTheater,
-  getAllShowsByMovie,
+  getAllTheatersByMovie,
   getShowsById,
 };
