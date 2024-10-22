@@ -11,6 +11,8 @@ const Paths = {
   Partner: "/partner",
   SingleMovie: `/movie/${SubPaths.IdParamFormat}`,
   BookShow: `/book-show/${SubPaths.IdParamFormat}`,
+  ForgotPassword: "/forgot-password",
+  ResetPassword: "/reset-password",
 };
 
 export default Paths;

@@ -15,6 +15,8 @@ import UserSession from "./components/UserSession";
 import NotLoggedIn from "./components/NotLoggedIn";
 import SingleMovie from "./pages/SingleMovie";
 import BookShow from "./pages/BookShow";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const singleMoviePath = Paths.SingleMovie.replace(
@@ -92,6 +94,22 @@ function App() {
                 element={
                   <NotLoggedIn>
                     <Register />
+                  </NotLoggedIn>
+                }
+              />
+              <Route
+                path={Paths.ForgotPassword}
+                element={
+                  <NotLoggedIn>
+                    <ForgotPassword />
+                  </NotLoggedIn>
+                }
+              />
+              <Route
+                path={Paths.ResetPassword}
+                element={
+                  <NotLoggedIn>
+                    <ResetPassword />
                   </NotLoggedIn>
                 }
               />

@@ -18,7 +18,7 @@ export const LoginUser = async (value) => {
     console.log(error);
     throw error;
   }
-}
+};
 
 export const GetCurrentUser = async () => {
   try {
@@ -28,4 +28,24 @@ export const GetCurrentUser = async () => {
     console.log(error);
     throw error;
   }
-}
+};
+
+export const ForgotPassword = async (payload) => {
+  try {
+    const response = await axiosInstance.post("/users/forgotPassword", payload);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const ResetPassword = async (payload) => {
+  try {
+    const response = await axiosInstance.post("/users/resetPassword", payload);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

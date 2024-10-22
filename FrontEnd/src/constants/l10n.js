@@ -118,6 +118,14 @@ const strings = new LocalizedStrings({
 
     HOME_SEARCH_PLACEHOLDER: "Type here to search for movies",
 
+    FORGOT_PASSWORD_HEADING: "Forgot Password",
+    LOGIN_FORM_EMAIL_LABEL: "Email",
+    LOGIN_FORM_EMAIL_PLACEHOLDER: "Enter your email",
+    LOGIN_FORM_EMAIL_REQUIRED_MESSAGE: "Email is required",
+    FORGOT_PASSWORD_SUBMIT_BUTTON: "SEND OTP",
+    FORGOT_PASSWORD_GO_TO_LOGIN: "Have you remembered your password?",
+    FORGOT_PASSWORD_LOGIN_HERE: "Login here",
+
     LOGIN_HEADING: "Login to Bookmyshow",
     LOGIN_FORM_EMAIL_LABEL: "Email",
     LOGIN_FORM_EMAIL_PLACEHOLDER: "Enter your email",
@@ -125,9 +133,11 @@ const strings = new LocalizedStrings({
     LOGIN_FORM_PASSWORD_LABEL: "Password",
     LOGIN_FORM_PASSWORD_PLACEHOLDER: "Enter your password",
     LOGIN_FORM_PASSWORD_REQUIRED_MESSAGE: "Password is required",
-    LOGIN_FORM_SUBMIT_BUTTON: "Login",
+    FORGOT_PASSWORD_FORM_SUBMIT_BUTTON: "Generate OTP",
     LOGIN_NEW_USER: "New user ?",
     LOGIN_REGISTER_NOW: "Register Now",
+    LOGIN_FORGOT_PASSWORD: "Forgot your password ?",
+    LOGIN_RESET_YOUR_PASSWORD: "Reset your password here",
 
     REGISTER_HEADING: "Register to Bookmyshow",
     REGISTER_FORM_NAME_LABEL: "Name",
@@ -147,6 +157,18 @@ const strings = new LocalizedStrings({
     REGISTER_FORM_SUBMIT_BUTTON: "Register",
     REGISTER_ALREADY_A_USER: "Already a user ?",
     REGISTER_LOGIN_NOW: "Login Now",
+
+    RESET_PASSWORD_HEADING: "Reset Password",
+    RESET_PASSWORD_FORM_OTP_LABEL: "OTP",
+    RESET_PASSWORD_FORM_OTP_PLACEHOLDER: "Enter the OTP",
+    RESET_PASSWORD_FORM_OTP_REQUIRED_MESSAGE: "OTP is required",
+    RESET_PASSWORD_FORM_NEW_PASSWORD_LABEL: "New Password",
+    RESET_PASSWORD_FORM_NEW_PASSWORD_PLACEHOLDER: "Enter the new password",
+    RESET_PASSWORD_FORM_NEW_PASSWORD_REQUIRED_MESSAGE:
+      "New password is required",
+    RESET_PASSWORD_FORM_SUBMIT_BUTTON: "Reset Password",
+    RESET_PASSWORD_GENERATE_NEW_OTP: "OTP Expired ?",
+    RESET_PASSWORD_GENERATE_OTP_AGAIN: "Generate OTP again here",
 
     RELOAD: "Reload",
   },

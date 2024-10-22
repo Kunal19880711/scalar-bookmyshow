@@ -1,6 +1,11 @@
-const User = require("../models/userSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const User = require("../models/userSchema");
+const HttpError = require("../common/HttpError");
+const {
+  default: emailHelper,
+  EMailTemplates,
+} = require("../utils/emailHelper");
 
 const registerUser = async (req, res, next) => {
   try {
@@ -97,6 +102,85 @@ const currentUser = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, currentUser };
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      throw new HttpError(400, "Please enter EMail for forgot password");
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new HttpError(404, "User not found.");
+    }
+    const otp = generateOtp(6);
+    await User.findByIdAndUpdate(user._id, {
+      otp,
+      otpExpiry: Date.now() + 15 * 60 * 1000, // 15 mins
+    });
+
+    await emailHelper(EMailTemplates.Otp, user.email, {
+      name: user.name,
+      otp,
+    });
+
+    res.status(200).json({
+      message: "OTP sent to your registered email.",
+      success: true,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  try {
+    const { otp, password } = req.body;
+    if (!otp || !password) {
+      throw new HttpError(400, "All fields are required.");
+    }
+    const user = await User.findOne({
+      otp,
+    });
+    if (!user) {
+      throw new HttpError(400, "Invalid OTP.");
+    }
+
+    if (user.otpExpiry < Date.now()) {
+      throw new HttpError(400, "Expired OTP. Regenerate new Otp.");
+    }
+
+    if (user.otp !== otp) {
+      throw new HttpError(400, "Invalid OTP.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await User.findByIdAndUpdate(user._id, {
+      password: hashedPassword,
+      $unset: {
+        otp: "",
+        otpExpiry: "",
+      },
+    });
+    res.status(200).json({
+      message: "Password reset successfully.",
+      success: true,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+function generateOtp(length) {
+  return Array.from({ length }, () => Math.floor(10 * Math.random())).join("");
+}
+
+module.exports = {
+  registerUser,
+  loginUser,
+  currentUser,
+  forgotPassword,
+  resetPassword,
+};
 
 // TODO: middleware to check Authorization of user

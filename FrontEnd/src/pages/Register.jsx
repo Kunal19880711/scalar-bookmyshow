@@ -24,7 +24,7 @@ const Register = () => {
         <section>
           <h1>{strings.REGISTER_HEADING}</h1>
         </section>
-        <section>
+        <section className="right-section">
           <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
               label={strings.REGISTER_FORM_NAME_LABEL}
@@ -117,7 +117,8 @@ const Register = () => {
         </section>
         <section>
           <p>
-            {strings.REGISTER_ALREADY_A_USER}{" "}
+            {strings.REGISTER_ALREADY_A_USER}
+            &nbsp;
             <Link to={Paths.Login}>{strings.REGISTER_LOGIN_NOW}</Link>
           </p>
         </section>
