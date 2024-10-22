@@ -7,12 +7,13 @@ import { showLoading, hideLoading } from "../redux/loaderSlice";
 import Paths from "../constants/Paths";
 import { MakePaymentAndBookShow } from "../api/booking";
 
+const skipStripe = import.meta.env.VITE_SKIP_STRIPE_CHECKOUT === "YES";
 const stripePublicKey = import.meta.env.VITE_STRIPE_PuBLIC_KEY;
 
 const CheckoutWithStripe = ({ show, selectedSeats }) => {
+  console.log(import.meta.env.VITE_SKIP_STRIPE_CHECKOUT);
   const params = useParams();
   const dispatch = useDispatch();
-  // const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const amount = selectedSeats.length * show.ticketPrice;
 
@@ -24,10 +25,11 @@ const CheckoutWithStripe = ({ show, selectedSeats }) => {
         seats: selectedSeats,
         amount,
         token,
+        skipStripe,
       });
       if (response.success) {
         message.success("Show Booking done!");
-        navigate(Paths);
+        navigate(Paths.Profile);
       } else {
         message.error(response.message);
       }
@@ -38,7 +40,7 @@ const CheckoutWithStripe = ({ show, selectedSeats }) => {
     }
   };
 
-  return (
+  const stripeCheckout = (
     <StripeCheckout
       token={onTokenHandler}
       amount={amount}
@@ -51,6 +53,27 @@ const CheckoutWithStripe = ({ show, selectedSeats }) => {
         </Button>
       </div>
     </StripeCheckout>
+  );
+
+  const dummyCheckout = (
+    <div className="max-width-600 mx-auto">
+      <Button
+        type="primary"
+        shape="round"
+        size="large"
+        block
+        onClick={() => onTokenHandler()}
+      >
+        Pay Now
+      </Button>
+    </div>
+  );
+
+  return (
+    <>
+      {!skipStripe && stripeCheckout}
+      {skipStripe && dummyCheckout}
+    </>
   );
 };
 
