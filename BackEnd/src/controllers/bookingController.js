@@ -2,6 +2,10 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const Booking = require("../models/bookingSchema");
 const Show = require("../models/showSchema");
 const HttpError = require("../common/HttpError");
+const {
+  default: emailHelper,
+  EMailTemplates,
+} = require("../utils/emailHelper");
 
 const addNewBooking = async (booking) => {
   const newBooking = new Booking(booking);
@@ -71,6 +75,44 @@ const makePayment = async ({ token, amount }) => {
   }
 };
 
+const sendBookingEmail = async (bookingId) => {
+  try {
+    const booking = await Booking.findById(bookingId)
+      .populate({
+        path: "show",
+        populate: {
+          path: "movie",
+          model: "movies",
+        },
+      })
+      .populate({
+        path: "show",
+        populate: {
+          path: "theater",
+          model: "theaters",
+        },
+      })
+      .populate("user");
+    const emailMapping = {
+      name: booking?.user?.name,
+      movie: booking?.show?.movie?.movieName,
+      theater: booking?.show?.theater?.name,
+      date: booking?.show?.date,
+      time: booking?.show?.time,
+      seats: booking?.seats.join(", "),
+      amount: booking?.amount,
+      transactionId: booking?.transactionId,
+    };
+    await emailHelper(
+      EMailTemplates.TicketTemplate,
+      booking?.user?.email,
+      emailMapping
+    );
+  } catch (e) {
+    console.error("Not able to send EMail. Please note", e);
+  }
+};
+
 const makePaymentAndBookShow = async (req, res, next) => {
   try {
     const newBooking = await addNewBooking({
@@ -81,12 +123,17 @@ const makePaymentAndBookShow = async (req, res, next) => {
     const { token, amount, show, seats } = req.body;
 
     let transactionId = "__DUMMY_TRANSACTION__";
-    if(!(process.env.MODE === "DEVELOPMENT") || !req.body.skipStripe) {
+    if (!(process.env.MODE === "DEVELOPMENT") || !req.body.skipStripe) {
       transactionId = await makePayment({ token, amount });
     }
 
     await updateShowBookedSeats(show, seats);
-    const updatedBooking = await updateBooking(newBooking._id, { transactionId });
+    const updatedBooking = await updateBooking(newBooking._id, {
+      transactionId,
+    });
+
+    sendBookingEmail(newBooking._id);
+
     res.status(200).json({
       data: updatedBooking,
       success: true,
