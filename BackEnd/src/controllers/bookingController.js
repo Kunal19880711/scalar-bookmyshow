@@ -73,7 +73,6 @@ const makePayment = async ({ token, amount }) => {
 
 const makePaymentAndBookShow = async (req, res, next) => {
   try {
-    console.log(req.body);
     const newBooking = await addNewBooking({
       ...req.body,
       user: req.body.user.userId,
