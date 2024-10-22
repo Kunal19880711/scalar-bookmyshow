@@ -48,7 +48,7 @@ function App() {
                 }
               />
               <Route
-                path={Paths.User}
+                path={Paths.Profile}
                 element={
                   <ProtectedRoute>
                     <Profile />

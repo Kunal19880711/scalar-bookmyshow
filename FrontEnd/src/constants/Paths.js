@@ -9,7 +9,6 @@ const Paths = {
   Admin: "/admin",
   Profile: "/profile",
   Partner: "/partner",
-  User: "/user",
   SingleMovie: `/movie/${SubPaths.IdParamFormat}`,
   BookShow: `/book-show/${SubPaths.IdParamFormat}`,
 };

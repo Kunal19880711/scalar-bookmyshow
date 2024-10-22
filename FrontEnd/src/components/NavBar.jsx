@@ -38,7 +38,7 @@ const NavBar = ({ children }) => {
             } else if (user.role === "partner") {
               navigate(Paths.Partner);
             } else {
-              navigate(Paths.User);
+              navigate(Paths.Profile);
             }
           },
         },
