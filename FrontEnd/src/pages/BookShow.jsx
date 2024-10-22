@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
 import { Row, Col, Card } from "antd";
 import { GetShowById } from "../api/show";
 import useData from "../hooks/useData";
+import CheckoutWithStripe from "./CheckoutWithStripe";
 
 const BookShow = () => {
   const params = useParams();
-  const dispath = useDispatch();
   const { entities: show } = useData(() => GetShowById({ showId: params.id }), {
     defaultValue: null,
   });
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate();
+
 
   const selectedSeatSet = new Set(selectedSeats);
   const bookedSeatSet = new Set(show?.bookedSeats || []);
@@ -122,21 +120,9 @@ const BookShow = () => {
           style={{ width: "100%" }}
         >
           {createSeats()}
-
-          {/* {selectedSeats.length > 0 && (
-          <StripeCheckout
-            token={onToken}
-            amount={selectedSeats.length * show.ticketPrice}
-            billingAddress
-            stripeKey="pk_test_51O5zcBSBDTkZoZSYLMhGUO2MTmaOGJ2zaVA8RuqLn35meiJiQUAzM8HKHgNYXJAGnRSf335yH7rYZQCJ8G6uPIrU00VLrpUJX9"
-          >
-            <div className="max-width-600 mx-auto">
-              <Button type="primary" shape="round" size="large" block>
-                Pay Now
-              </Button>
-            </div>
-          </StripeCheckout>
-        )} */}
+          {selectedSeats.length > 0 && (
+            <CheckoutWithStripe show={show} selectedSeats={selectedSeats} />
+          )}
         </Card>
       </Col>
     </Row>
