@@ -134,6 +134,7 @@ const strings = new LocalizedStrings({
     LOGIN_FORM_PASSWORD_PLACEHOLDER: "Enter your password",
     LOGIN_FORM_PASSWORD_REQUIRED_MESSAGE: "Password is required",
     FORGOT_PASSWORD_FORM_SUBMIT_BUTTON: "Generate OTP",
+    LOGIN_FORM_SUBMIT_BUTTON: "Login",
     LOGIN_NEW_USER: "New user ?",
     LOGIN_REGISTER_NOW: "Register Now",
     LOGIN_FORGOT_PASSWORD: "Forgot your password ?",

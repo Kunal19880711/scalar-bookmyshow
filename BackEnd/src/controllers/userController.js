@@ -41,15 +41,7 @@ const loginUser = async (req, res, next) => {
     const userExists = await User.findOne({ email: req?.body?.email });
 
     if (!userExists) {
-      return (
-        res
-          // TODO: add proper http status
-          .status(200)
-          .json({
-            message: "User doesn't exists. Please register.",
-            success: true,
-          })
-      );
+      throw new HttpError(400, "User doesn't exists. Please register.");
     }
 
     const validatePassword = await bcrypt.compare(
@@ -57,12 +49,7 @@ const loginUser = async (req, res, next) => {
       userExists.password
     );
     if (!validatePassword) {
-      return (
-        res
-          // TODO: add proper http status
-          .status(200)
-          .json({ message: "Please enter valid password.", success: false })
-      );
+      throw new HttpError(400, "Please enter valid password.");
     }
     // TODO: creation of session with proper session data
     const token = jwt.sign({ userId: userExists._id }, process.env.SECRET_KEY, {

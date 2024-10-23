@@ -15,6 +15,8 @@ const Login = () => {
       if (response?.success) {
         message.success(response?.message);
         dispatch(setToken(response?.data));
+      } else {
+        message.error(response?.message);
       }
     } catch (err) {
       message.error(err?.response?.data?.message || err?.message);
