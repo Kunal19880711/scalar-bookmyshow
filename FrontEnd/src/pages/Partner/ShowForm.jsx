@@ -136,6 +136,7 @@ const ShowForm = ({
                   <Input
                     id="time"
                     type="time"
+                    step={300}
                     placeholder={strings.SHOWFORM_FORM_TIME_PLACEHOLDER}
                   ></Input>
                 </Form.Item>
