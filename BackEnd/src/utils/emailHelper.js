@@ -25,7 +25,7 @@ const EMailTemplates = {
 
 function fillTemplate(content, mapping) {
   for (let key in mapping) {
-    content = content.replace(`#{${key}}`, mapping[key]);
+    content = content.replaceAll(`#{${key}}`, mapping[key]);
   }
   return content;
 }

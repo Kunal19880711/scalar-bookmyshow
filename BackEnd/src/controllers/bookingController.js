@@ -1,4 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+const moment = require("moment");
 const Booking = require("../models/bookingSchema");
 const Show = require("../models/showSchema");
 const HttpError = require("../common/HttpError");
@@ -96,8 +97,10 @@ const sendBookingEmail = async (bookingId) => {
     const emailMapping = {
       name: booking?.user?.name,
       movie: booking?.show?.movie?.movieName,
+      poster: booking?.show?.movie?.poster,
       theater: booking?.show?.theater?.name,
-      date: booking?.show?.date,
+      address: booking?.show?.theater?.address,
+      date: booking?.show?.date ? moment(booking.show.date).format("ll") : "",
       time: booking?.show?.time,
       seats: booking?.seats.join(", "),
       amount: booking?.amount,

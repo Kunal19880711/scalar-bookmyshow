@@ -122,39 +122,35 @@
     </div> -->
     <main class="email-container">
       <header class="ticket-wrapper">
-        <img
-          class="poster"
-          src="https://imgs.search.brave.com/ASxiFV7b0R5E3cx805zDHlVM4pwS6Be30L2klTrQZsI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pcnMu/d3d3Lndhcm5lcmJy/b3MuY29tL2tleWFy/dC1qcGVnL21vdmll/cy9tZWRpYS9icm93/c2VyL2dvbmVfd2l0/aF90aGVfd2luZF9r/ZXlfYXJ0XzAuanBn"
-          alt="Gone with the wind"
-        />
+        <img class="poster" src="#{poster}" alt="#{movie}" />
         <div class="ticket-details">
           <div class="transaction-id-row">
             <div>
               <span>Transaction ID:</span>
               &nbsp;
-              <span>01010101010101010</span>
+              <span>#{transactionId}</span>
             </div>
           </div>
           <div class="location-row">
-            <div class="user-name">Uttam Sharma</div>
+            <div class="user-name">#{name}</div>
             <div>
-              <div class="theater-name">City pride</div>
-              <div class="theater-address">somewhere eveywhere</div>
+              <div class="theater-name">#{theater}</div>
+              <div class="theater-address">#{address}</div>
             </div>
           </div>
           <div class="title-row">
-            <h1>Gone with the wind</h1>
+            <h1>#{movie}</h1>
           </div>
           <div class="seat-details-row">
             <h2 class="chip">
-              <span>Seats :</span>&nbsp;<span>24, 25, 26</span>
+              <span>Seats :</span>&nbsp;<span>#{seats}</span>
             </h2>
           </div>
           <div class="time-row">
-            <div class="chip">May 25, 2024</div>
-            <div class="chip">10:00 AM</div>
+            <div class="chip">#{date}</div>
+            <div class="chip">#{time}</div>
             <div class="chip">
-              <span>Price:</span>&nbsp;<span>Rs. 140</span>
+              <span>Price:</span>&nbsp;<span>Rs. #{amount}</span>
             </div>
           </div>
         </div>
