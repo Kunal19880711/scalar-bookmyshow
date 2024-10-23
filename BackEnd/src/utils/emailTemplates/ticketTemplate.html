@@ -31,7 +31,7 @@
         align-items: stretch;
         background-color: #f5f6f7;
       }
-      .poster img {
+      .poster {
         object-fit: cover;
       }
       .ticket-details {
@@ -48,9 +48,8 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        font-weight: 300;
-        font-size: small;
-        padding-bottom: 0.5em;
+        font-weight: 400;
+        font-size: x-small;
       }
       .location-row {
         width: 100%;
@@ -59,9 +58,17 @@
         justify-content: space-between;
         align-items: flex-start;
       }
-      .theater-name {
+      .user-name {
         font-size: x-large;
         text-transform: capitalize;
+      }
+      .theater-name {
+        font-size: large;
+        text-transform: capitalize;
+      }
+      .theater-address {
+        font-size: small;
+        min-height: 3em;
       }
       .title-row {
         width: 100%;
@@ -71,7 +78,8 @@
         align-items: flex-start;
       }
       .title-row h1 {
-        font-size: 3em;
+        font-size: 2em;
+        margin: 0;
       }
       .seat-details-row {
         width: 100%;
@@ -114,12 +122,11 @@
     </div> -->
     <main class="email-container">
       <header class="ticket-wrapper">
-        <div class="poster">
-          <img
-            src="https://imgs.search.brave.com/ASxiFV7b0R5E3cx805zDHlVM4pwS6Be30L2klTrQZsI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pcnMu/d3d3Lndhcm5lcmJy/b3MuY29tL2tleWFy/dC1qcGVnL21vdmll/cy9tZWRpYS9icm93/c2VyL2dvbmVfd2l0/aF90aGVfd2luZF9r/ZXlfYXJ0XzAuanBn"
-            alt="Gone with the wind"
-          />
-        </div>
+        <img
+          class="poster"
+          src="https://imgs.search.brave.com/ASxiFV7b0R5E3cx805zDHlVM4pwS6Be30L2klTrQZsI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pcnMu/d3d3Lndhcm5lcmJy/b3MuY29tL2tleWFy/dC1qcGVnL21vdmll/cy9tZWRpYS9icm93/c2VyL2dvbmVfd2l0/aF90aGVfd2luZF9r/ZXlfYXJ0XzAuanBn"
+          alt="Gone with the wind"
+        />
         <div class="ticket-details">
           <div class="transaction-id-row">
             <div>
@@ -129,8 +136,11 @@
             </div>
           </div>
           <div class="location-row">
-            <div class="theater-name">City pride</div>
-            <div>somewhere eveywhere</div>
+            <div class="user-name">Uttam Sharma</div>
+            <div>
+              <div class="theater-name">City pride</div>
+              <div class="theater-address">somewhere eveywhere</div>
+            </div>
           </div>
           <div class="title-row">
             <h1>Gone with the wind</h1>
