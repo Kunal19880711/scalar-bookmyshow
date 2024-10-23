@@ -3,57 +3,100 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <title>Movie Ticket</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Montserrat", sans-serif;
         background-color: #f4f4f4;
         margin: 0;
         padding: 0;
       }
       .email-container {
-        max-width: 600px;
+        max-width: 800px;
         margin: 20px auto;
         background-color: #fff;
-        padding: 20px;
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-      .header {
-        text-align: center;
+      .ticket-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+        background-color: #f5f6f7;
       }
-      .header img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
+      .poster img {
+        object-fit: cover;
       }
       .ticket-details {
-        margin-top: 20px;
+        flex: 1;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
       }
-      .ticket-details h2 {
-        color: #333;
+      .transaction-id-row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        font-weight: 300;
+        font-size: small;
+        padding-bottom: 0.5em;
       }
-      .details {
-        list-style: none;
-        padding: 0;
+      .location-row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
       }
-      .details li {
-        margin: 10px 0;
-        color: #555;
+      .theater-name {
+        font-size: x-large;
+        text-transform: capitalize;
       }
-      .details li span {
-        font-weight: bold;
+      .title-row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
       }
-      .footer {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 12px;
-        color: #999;
+      .title-row h1 {
+        font-size: 3em;
+      }
+      .seat-details-row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .time-row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        font-size: larger;
+      }
+      .chip {
+        border: solid 1px black;
+        border-radius: 5rem;
+        padding: 1em;
       }
     </style>
   </head>
   <body>
-    <div class="email-container">
+    <!-- <div class="email-container">
       <div class="ticket-details">
         <h2>Movie Ticket</h2>
         <ul class="details">
@@ -68,10 +111,43 @@
         </ul>
       </div>
       <div class="footer">Enjoy your movie!</div>
-    </div>
-    <main>
-      <header>
-        
+    </div> -->
+    <main class="email-container">
+      <header class="ticket-wrapper">
+        <div class="poster">
+          <img
+            src="https://imgs.search.brave.com/ASxiFV7b0R5E3cx805zDHlVM4pwS6Be30L2klTrQZsI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pcnMu/d3d3Lndhcm5lcmJy/b3MuY29tL2tleWFy/dC1qcGVnL21vdmll/cy9tZWRpYS9icm93/c2VyL2dvbmVfd2l0/aF90aGVfd2luZF9r/ZXlfYXJ0XzAuanBn"
+            alt="Gone with the wind"
+          />
+        </div>
+        <div class="ticket-details">
+          <div class="transaction-id-row">
+            <div>
+              <span>Transaction ID:</span>
+              &nbsp;
+              <span>01010101010101010</span>
+            </div>
+          </div>
+          <div class="location-row">
+            <div class="theater-name">City pride</div>
+            <div>somewhere eveywhere</div>
+          </div>
+          <div class="title-row">
+            <h1>Gone with the wind</h1>
+          </div>
+          <div class="seat-details-row">
+            <h2 class="chip">
+              <span>Seats :</span>&nbsp;<span>24, 25, 26</span>
+            </h2>
+          </div>
+          <div class="time-row">
+            <div class="chip">May 25, 2024</div>
+            <div class="chip">10:00 AM</div>
+            <div class="chip">
+              <span>Price:</span>&nbsp;<span>Rs. 140</span>
+            </div>
+          </div>
+        </div>
       </header>
     </main>
   </body>
