@@ -2,6 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+
 const connectDB = require("./config/db");
 const userRoute = require("./routes/userRoute");
 const movieRoute = require("./routes/movieRoute");
@@ -12,9 +16,29 @@ const handleMongooseError = require("./middleware/handleMongooseError");
 const handleError = require("./middleware/handleError");
 const validateJWTToken = require("./middleware/validateJWTToken");
 
-const app = express();
 connectDB();
 
+const app = express();
+const apiLimiter = rateLimit({
+  windowMS: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests from this IP, please try again after 15 minutes",
+});
+app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"], // Allow scripts from 'self'
+      styleSrc: ["'self'", "'unsafe-inline'"], // Allow inline styles (unsafe)
+      imgSrc: ["'self'", "data:"], // Allow images from 'self' and data URLs,
+      connectSrc: ["'self'"], // Allow connections to 'self'
+      fontSrc: ["'self'", "fonts.gstatic.com"], // Allow fonts from 'self' and fonts.gstatic.com
+      objectSrc: ["'none'"], // Disallow object, embed, and applet elements
+      upgradeInsecureRequests: [], // Upgrade insecure requests to HTTPS
+    },
+  })
+);
 app.use(cors()); // TODO: furthur exploration
 app.use(express.json());
 if (process.env.SESSION_COOKIE_NAME) {
