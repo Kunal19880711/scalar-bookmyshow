@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -12,8 +13,11 @@ const movieRoute = require("./routes/movieRoute");
 const theaterRoute = require("./routes/theaterRoute");
 const showRoute = require("./routes/showRoute");
 const bookingRoute = require("./routes/bookingRoute");
-const handleMongooseError = require("./middleware/handleMongooseError");
-const handleError = require("./middleware/handleError");
+const {
+  handleParsingError,
+  handleMongooseError,
+  handleError,
+} = require("./middleware/handleError");
 const validateJWTToken = require("./middleware/validateJWTToken");
 
 connectDB();
@@ -41,6 +45,12 @@ app.use(
 );
 app.use(cors()); // TODO: furthur exploration
 app.use(express.json());
+app.use(mongoSanitize());
+app.use("/bms", apiLimiter);
+app.use(
+  "/",
+  express.static(path.join(__dirname, "..", "..", "frontEnd", "dist"))
+);
 if (process.env.SESSION_COOKIE_NAME) {
   app.use(cookieParser());
 }
@@ -50,6 +60,7 @@ app.use("/bms/theaters", validateJWTToken, theaterRoute);
 app.use("/bms/shows", validateJWTToken, showRoute);
 app.use("/bms/bookings", validateJWTToken, bookingRoute);
 
+app.use(handleParsingError);
 app.use(handleMongooseError);
 app.use(handleError);
 
