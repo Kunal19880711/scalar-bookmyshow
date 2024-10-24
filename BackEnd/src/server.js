@@ -35,7 +35,7 @@ app.use(
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"], // Allow scripts from 'self'
       styleSrc: ["'self'", "'unsafe-inline'"], // Allow inline styles (unsafe)
-      imgSrc: ["'self'", "data:"], // Allow images from 'self' and data URLs,
+      imgSrc: ["'self'", "data:", "*"], // Allow images from 'self' and data URLs,
       connectSrc: ["'self'"], // Allow connections to 'self'
       fontSrc: ["'self'", "fonts.gstatic.com"], // Allow fonts from 'self' and fonts.gstatic.com
       objectSrc: ["'none'"], // Disallow object, embed, and applet elements
@@ -49,7 +49,7 @@ app.use(mongoSanitize());
 app.use("/bms", apiLimiter);
 app.use(
   "/",
-  express.static(path.join(__dirname, "..", "..", "frontEnd", "dist"))
+  express.static(path.join(__dirname, "..", "..", "FrontEnd", "dist"))
 );
 if (process.env.SESSION_COOKIE_NAME) {
   app.use(cookieParser());
