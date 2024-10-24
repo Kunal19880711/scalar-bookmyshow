@@ -138,7 +138,13 @@ const sendBookingEmail = async (bookingId) => {
   }
 };
 
-const bookTicketsInTransaction = async (user, show, seats, amount, paymentIntent) => {
+const bookTicketsInTransaction = async (
+  user,
+  show,
+  seats,
+  amount,
+  paymentIntent
+) => {
   // Step 1: Start a transaction
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -152,7 +158,7 @@ const bookTicketsInTransaction = async (user, show, seats, amount, paymentIntent
       user,
       seats,
       amount,
-      transactionId: !!paymentIntent
+      transactionId: !paymentIntent
         ? "__DUMMY_TRANSACTION__"
         : paymentIntent.id,
     };
@@ -182,7 +188,7 @@ const makePaymentAndBookShow = async (req, res, next) => {
       throw new HttpError(400, "Bad Request: Missing required fields");
     }
     // Step 1.1: Get user
-    const user = req.body.user.userId
+    const user = req.body.user.userId;
 
     // Step 2: Create Stripe PaymentIntend
     paymentIntent = skipStripePayment
