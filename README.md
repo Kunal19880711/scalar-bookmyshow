@@ -11,6 +11,12 @@ Book-my-show implementation in Scalar
 5. all mongoose Errors handling
 6. Delete Entity High order fn
 
-# TODO: BUGS
-1. Edit show data not prefilled
-2. Edit show timing AM/PM
+# Masters
+1. Error Handler Middleware - specfic status codes
+2. Global Alerts on Client side
+3. Cookie Handling instead of local storage
+4. using luxon library to format dates whereever it is needed
+5. custom hooks -> extract api call design (design is reusable)
+6. redux state handling for movies and theatre
+7. swagger
+8. Read Transaction on mongodb
