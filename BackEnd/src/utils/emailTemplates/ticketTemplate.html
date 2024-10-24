@@ -18,143 +18,151 @@
         padding: 0;
       }
       .email-container {
-        max-width: 800px;
+        max-width: 600px;
         margin: 20px auto;
-        background-color: #fff;
-        border-radius: 10px;
+        background-color: #f7f6f5;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding-right: 1em;
+      }
+      .email-container table {
+        width: 100%;
+        border-spacing: 0;
       }
       .ticket-wrapper {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: stretch;
         background-color: #f5f6f7;
+        font-weight: 500;
       }
-      .poster {
+      .poster img {
         object-fit: cover;
+        vertical-align: top;
       }
-      .ticket-details {
-        flex: 1;
-        padding: 1em;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: 600;
-      }
-      .transaction-id-row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
+      .transaction-id {
         font-weight: 400;
-        font-size: x-small;
+        font-size: xx-small;
+        height: 0.5em;
       }
-      .location-row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
+      .user-theater-row {
+        vertical-align: top;
+        height: 0em;
       }
       .user-name {
-        font-size: x-large;
+        font-size: medium;
         text-transform: capitalize;
+        font-weight: 400;
       }
       .theater-name {
-        font-size: large;
+        font-size: small;
         text-transform: capitalize;
+        text-align: right;
+        font-weight: 400;
       }
       .theater-address {
-        font-size: small;
-        min-height: 3em;
+        font-size: x-small;
+        text-align: right;
       }
       .title-row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
+        height: 0em;
       }
-      .title-row h1 {
+      .title {
+        text-align: center;
+        padding: 0;
+        font-size: medium;
+      }
+      h1 {
         font-size: 2em;
         margin: 0;
       }
-      .seat-details-row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
+      .seats-row {
+        height: 2em;
+      }
+      .seats {
+        font-size: small;
+        text-align: center;
+        padding: 0;
+      }
+      h2 {
+        font-size: 1em;
+        margin: 0;
       }
       .time-row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-        font-size: larger;
+        font-size: small;
+        height: 3em;
+        font-weight: 500;
+      }
+      .date {
+        text-align: left;
+      }
+      .time {
+        text-align: center;
+      }
+      .price {
+        text-align: right;
       }
       .chip {
-        border: solid 1px black;
+        border: solid 2px black;
         border-radius: 5rem;
-        padding: 1em;
+        padding: 0.5em;
       }
     </style>
   </head>
   <body>
-    <!-- <div class="email-container">
-      <div class="ticket-details">
-        <h2>Movie Ticket</h2>
-        <ul class="details">
-          <li><span>Name:</span> #{name}</li>
-          <li><span>Movie:</span> #{movie}</li>
-          <li><span>Theater:</span> #{theater}</li>
-          <li><span>Date:</span> #{date}</li>
-          <li><span>Time:</span> #{time}</li>
-          <li><span>Seats NOs:</span> #{seats}</li>
-          <li><span>Amount:</span> Rs. #{amount}</li>
-          <li><span>Transaction ID:</span> #{transactionId}</li>
-        </ul>
-      </div>
-      <div class="footer">Enjoy your movie!</div>
-    </div> -->
-    <main class="email-container">
-      <header class="ticket-wrapper">
-        <img class="poster" src="#{poster}" alt="#{movie}" />
-        <div class="ticket-details">
-          <div class="transaction-id-row">
-            <div>
-              <span>Transaction ID:</span>
-              &nbsp;
-              <span>#{transactionId}</span>
-            </div>
-          </div>
-          <div class="location-row">
-            <div class="user-name">#{name}</div>
-            <div>
-              <div class="theater-name">#{theater}</div>
-              <div class="theater-address">#{address}</div>
-            </div>
-          </div>
-          <div class="title-row">
+    <div class="email-container">
+      <table>
+        <tr>
+          <td rowspan="6" class="poster">
+            <img width="200px" src="#{poster}" alt="#{movie}" />
+          </td>
+          <td class="transaction-id" colspan="2">
+            <span>Transaction ID:</span>
+            &nbsp;
+            <span>#{transactionId}</span>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="user-theater-row">
+          <td class="user-name">#{name}</td>
+          <td></td>
+          <td>
+            <div class="theater-name">#{show}</div>
+            <div class="theater-name">#{theater}</div>
+            <div class="theater-address">#{address}</div>
+          </td>
+        </tr>
+        <tr class="title-row">
+          <td colspan="3" class="title">
             <h1>#{movie}</h1>
-          </div>
-          <div class="seat-details-row">
-            <h2 class="chip">
-              <span>Seats :</span>&nbsp;<span>#{seats}</span>
+          </td>
+        </tr>
+        <tr class="seats-row">
+          <td colspan="3" class="seats">
+            <h2>
+              <span class="chip">
+                <span>Seats :</span>&nbsp;<span>#{seats}</span>
+              </span>
             </h2>
-          </div>
-          <div class="time-row">
-            <div class="chip">#{date}</div>
-            <div class="chip">#{time}</div>
-            <div class="chip">
-              <span>Price:</span>&nbsp;<span>Rs. #{amount}</span>
+          </td>
+        </tr>
+        <tr class="time-row">
+          <td class="date">
+            <div>
+              <span class="chip">#{date}</span>
             </div>
-          </div>
-        </div>
-      </header>
-    </main>
+          </td>
+          <td class="time">
+            <div>
+              <span class="chip">#{time}</span>
+            </div>
+          </td>
+          <td class="price">
+            <div>
+              <span class="chip">
+                <span>Price:</span>&nbsp;<span>Rs. #{amount}</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
   </body>
 </html>

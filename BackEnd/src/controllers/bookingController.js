@@ -100,8 +100,11 @@ const sendBookingEmail = async (bookingId) => {
       poster: booking?.show?.movie?.poster,
       theater: booking?.show?.theater?.name,
       address: booking?.show?.theater?.address,
+      show: booking?.show?.name,
       date: booking?.show?.date ? moment(booking.show.date).format("ll") : "",
-      time: booking?.show?.time,
+      time: booking?.show?.time
+        ? moment(booking.show.time, "HH:MM").format("hh:mm A")
+        : "",
       seats: booking?.seats.join(", "),
       amount: booking?.amount,
       transactionId: booking?.transactionId,
