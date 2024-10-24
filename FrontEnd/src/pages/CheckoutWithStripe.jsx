@@ -8,9 +8,9 @@ import Paths from "../constants/Paths";
 import { MakePaymentAndBookShow } from "../api/booking";
 
 const skipStripe = import.meta.env.VITE_SKIP_STRIPE_CHECKOUT === "YES";
-const stripePublicKey = import.meta.env.VITE_STRIPE_PuBLIC_KEY;
+const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 
-const CheckoutWithStripe = ({ show, selectedSeats }) => {
+const CheckoutWithStripe = ({ show, selectedSeats, reset }) => {
   console.log(import.meta.env.VITE_SKIP_STRIPE_CHECKOUT);
   const params = useParams();
   const dispatch = useDispatch();
@@ -32,11 +32,13 @@ const CheckoutWithStripe = ({ show, selectedSeats }) => {
         navigate(Paths.Profile);
       } else {
         message.error(response.message);
+        reset();
       }
       dispatch(hideLoading());
     } catch (err) {
       message.error(err?.response?.data?.message || err?.message);
       dispatch(hideLoading());
+      reset();
     }
   };
 

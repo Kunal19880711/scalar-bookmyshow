@@ -8,7 +8,7 @@ import CheckoutWithStripe from "./CheckoutWithStripe";
 
 const BookShow = () => {
   const params = useParams();
-  const { entities: show } = useData(() => GetShowById({ showId: params.id }), {
+  const { entities: show, getData } = useData(() => GetShowById({ showId: params.id }), {
     defaultValue: null,
   });
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -16,6 +16,11 @@ const BookShow = () => {
 
   const selectedSeatSet = new Set(selectedSeats);
   const bookedSeatSet = new Set(show?.bookedSeats || []);
+
+  const reset = () => {
+    setSelectedSeats([]);
+    getData();
+  }
 
   const seatClickHandler = (seatNumber) => {
     if (bookedSeatSet.has(seatNumber)) {
@@ -121,7 +126,7 @@ const BookShow = () => {
         >
           {createSeats()}
           {selectedSeats.length > 0 && (
-            <CheckoutWithStripe show={show} selectedSeats={selectedSeats} />
+            <CheckoutWithStripe show={show} selectedSeats={selectedSeats} reset={reset} />
           )}
         </Card>
       </Col>

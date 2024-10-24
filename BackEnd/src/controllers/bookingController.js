@@ -1,5 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const moment = require("moment");
+const mongoose = require("mongoose");
 const Booking = require("../models/bookingSchema");
 const Show = require("../models/showSchema");
 const HttpError = require("../common/HttpError");
@@ -8,41 +9,39 @@ const {
   EMailTemplates,
 } = require("../utils/emailHelper");
 
-const addNewBooking = async (booking) => {
+const addNewBooking = async (booking, session) => {
   const newBooking = new Booking(booking);
   try {
-    return await newBooking.save();
+    return await newBooking.save({ session });
   } catch (error) {
     throw error;
   }
 };
 
-const updateBooking = async (bookingId, bookingUpdates) => {
+const checkAndUpdateBookedSeats = async (showId, seats, session) => {
   try {
-    const updatedBooking = await Booking.findByIdAndUpdate(
-      bookingId,
-      bookingUpdates,
-      { new: true }
-    );
-    if (!updatedBooking) {
-      throw new HttpError(404, "Booking not found");
+    // Step 1: Get the show
+    const show = await Show.findById(showId).session(session);
+    if (!show) {
+      throw new HttpError(404, "Show not found");
     }
-    return updatedBooking;
-  } catch (error) {
-    throw error;
-  }
-};
 
-const updateShowBookedSeats = async (showId, seats) => {
-  try {
+    // Step 2: Check if seats are not already booked
+    const bookedSeatSet = new Set(show.bookedSeats);
+    if (seats.some((seat) => bookedSeatSet.has(seat))) {
+      throw new HttpError(
+        409,
+        "Some seats are already booked. Please select some other seats."
+      );
+    }
+
+    // Step 3: update the seats
     const updatedShow = await Show.findByIdAndUpdate(
       showId,
       { $push: { bookedSeats: { $each: seats } } },
-      { new: true }
+      { new: true, session }
     );
-    if (!updatedShow) {
-      throw new HttpError(404, "Show not found");
-    }
+
     return updatedShow;
   } catch (error) {
     throw error;
@@ -51,10 +50,13 @@ const updateShowBookedSeats = async (showId, seats) => {
 
 const makePayment = async ({ token, amount }) => {
   try {
+    // Step 1: Check if customer alreay exists
     const customers = await stripe.customers.list({
       email: token.email,
       limit: 1,
     });
+
+    // Step 2: Create new customer if not exists
     const currCustomer =
       customers.data.length > 0
         ? customers.data[0]
@@ -62,6 +64,8 @@ const makePayment = async ({ token, amount }) => {
             source: token.id,
             email: token.email,
           });
+
+    // Step 3: Create PaymentIntend
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: "usd",
@@ -70,9 +74,24 @@ const makePayment = async ({ token, amount }) => {
       receipt_email: token.email,
       description: "Token has been assigned to the movie",
     });
-    return paymentIntent.id;
+
+    return paymentIntent;
   } catch (error) {
     throw error;
+  }
+};
+
+const refundPayment = async (paymentIntent) => {
+  try {
+    // Create a refund
+    const refund = await stripe.refunds.create({
+      payment_intent: paymentIntent.id, // PaymentIntent ID
+    });
+  } catch (error) {
+    console.error(
+      `Stripe refund failed for ${paymentIntent.id}. Please look into the issue.`,
+      error
+    );
   }
 };
 
@@ -119,33 +138,81 @@ const sendBookingEmail = async (bookingId) => {
   }
 };
 
-const makePaymentAndBookShow = async (req, res, next) => {
+const bookTicketsInTransaction = async (user, show, seats, amount, paymentIntent) => {
+  // Step 1: Start a transaction
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    const newBooking = await addNewBooking({
-      ...req.body,
-      user: req.body.user.userId,
-      transactionId: "__NO_TRANSACTION_YET__",
-    });
-    const { token, amount, show, seats } = req.body;
+    // Step 2: Check and update tickets in the transaction.
+    await checkAndUpdateBookedSeats(show, seats, session);
 
-    let transactionId = "__DUMMY_TRANSACTION__";
-    if (!(process.env.MODE === "DEVELOPMENT") || !req.body.skipStripe) {
-      transactionId = await makePayment({ token, amount });
+    // Step 3: Create a new booking in the transaction.
+    const newbookingObj = {
+      show,
+      user,
+      seats,
+      amount,
+      transactionId: !!paymentIntent
+        ? "__DUMMY_TRANSACTION__"
+        : paymentIntent.id,
+    };
+    const newBooking = await addNewBooking(newbookingObj, session);
+
+    // Step 4: Commit the transaction if everything is successful
+    await session.commitTransaction();
+    session.endSession();
+
+    return newBooking;
+  } catch (e) {
+    // Step 5: abort the transaction in case of error
+    await session.abortTransaction();
+    session.endSession();
+    throw e;
+  }
+};
+
+const makePaymentAndBookShow = async (req, res, next) => {
+  const skipStripePayment =
+    process.env.MODE === "DEVELOPMENT" && req.body.skipStripe;
+  let paymentIntent = null;
+  try {
+    // Step 1: Validate the request
+    const { show, seats, token, amount } = req.body;
+    if (!show || !token || !amount || !Array.isArray(seats)) {
+      throw new HttpError(400, "Bad Request: Missing required fields");
     }
+    // Step 1.1: Get user
+    const user = req.body.user.userId
 
-    await updateShowBookedSeats(show, seats);
-    const updatedBooking = await updateBooking(newBooking._id, {
-      transactionId,
-    });
+    // Step 2: Create Stripe PaymentIntend
+    paymentIntent = skipStripePayment
+      ? null
+      : await makePayment({ token, amount });
 
-    sendBookingEmail(newBooking._id);
+    // Step 3: Book Tickets in transaction
+    const newBooking = await bookTicketsInTransaction(
+      user,
+      show,
+      seats,
+      amount,
+      paymentIntent
+    );
 
+    // Step 4: Send response
     res.status(200).json({
-      data: updatedBooking,
+      data: newBooking,
       success: true,
       message: "Payment made and show booked successfully.",
     });
+
+    // Step 5: Send booking EMail
+    sendBookingEmail(newBooking._id);
   } catch (error) {
+    // Step 6: Safely refund money if needed
+    if (!skipStripePayment && paymentIntent) {
+      await refundPayment(paymentIntent);
+    }
+
     next(error);
   }
 };
