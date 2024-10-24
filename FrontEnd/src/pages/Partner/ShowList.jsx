@@ -37,6 +37,7 @@ const ShowList = ({ theater, movies }) => {
       title: strings.SHOWLIST_TABLEHEADING_TIME,
       dataIndex: "time",
       key: "time",
+      render: (time) => moment(time, "HH:mm").format("hh:mm A"),
     },
     {
       title: strings.SHOWLIST_TABLEHEADING_MOVIE,
