@@ -1,6 +1,8 @@
 # scalar-bookmyshow
 
-Book-my-show implementation in Scalar
+A Scalar Capstone project which is Book-my-show clone implementation.
+
+Deplyed at: [https://scalarbookmyshow-357915187611.us-central1.run.app]
 
 ## TODO
 
