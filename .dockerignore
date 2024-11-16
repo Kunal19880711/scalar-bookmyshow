@@ -1,5 +1,12 @@
-FrontEnd/node_modules
-BackEnd/node_modules
+.config
+.test-*
 .vscode
+client/node_modules
+server/node_modules
+.dockerignore
 .git
+.gitignore
+Dockerfile
+jakefile.js
+README.md
 scalar-bookmyshow.code-workspace
