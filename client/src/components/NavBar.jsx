@@ -1,3 +1,4 @@
+import "./NavBar.css";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -55,11 +56,8 @@ const NavBar = ({ children }) => {
   ];
 
   return (
-    <Layout>
-      <Layout.Header
-        className="d-flex justify-content-between"
-        style={{ position: "sticky", top: 0, zIndex: 1, width: "100%" }}
-      >
+    <Layout className="navbar-layout">
+      <Layout.Header className="d-flex justify-content-between">
         <div
           className="d-flex align-items-center gap-10 cursor-pointer color-white"
           onClick={() => navigate(Paths.Home)}
