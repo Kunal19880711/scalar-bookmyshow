@@ -22,6 +22,7 @@ const validateJWTToken = require("./middleware/validateJWTToken");
 
 connectDB();
 
+const clientDistPath = path.join(__dirname, "..", "..", "client", "dist");
 const app = express();
 const apiLimiter = rateLimit({
   windowMS: 15 * 60 * 1000,
@@ -44,7 +45,7 @@ app.use(
     },
   })
 );
-app.use(cors()); // TODO: furthur exploration
+// app.use(cors()); // TODO: furthur exploration
 app.use(express.json());
 app.use(mongoSanitize());
 app.use("/bms", apiLimiter);
@@ -61,10 +62,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(
-  "/",
-  express.static(path.join(__dirname, "..", "..", "client", "dist"))
-);
+app.use("/", express.static(clientDistPath));
 if (process.env.SESSION_COOKIE_NAME) {
   app.use(cookieParser());
 }
@@ -73,6 +71,11 @@ app.use("/bms/movies", validateJWTToken, movieRoute);
 app.use("/bms/theaters", validateJWTToken, theaterRoute);
 app.use("/bms/shows", validateJWTToken, showRoute);
 app.use("/bms/bookings", validateJWTToken, bookingRoute);
+
+// Handles any requests that don't match the ones above
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientDistPath, "index.html"));
+});
 
 app.use(handleParsingError);
 app.use(handleMongooseError);
