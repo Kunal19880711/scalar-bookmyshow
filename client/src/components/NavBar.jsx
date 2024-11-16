@@ -60,13 +60,18 @@ const NavBar = ({ children }) => {
         className="d-flex justify-content-between"
         style={{ position: "sticky", top: 0, zIndex: 1, width: "100%" }}
       >
-        <h3
-          className="demo-logo text-white m-0"
-          style={{ color: "white", cursor: "pointer" }}
+        <div
+          className="d-flex align-items-center gap-10 cursor-pointer color-white"
           onClick={() => navigate(Paths.Home)}
         >
-          {strings.NAVBAR_HEADING}
-        </h3>
+          <img
+            src="/bookmymovie.svg"
+            alt="BookMyMovie Logo"
+            height={64}
+            width={64}
+          />
+          <h3 className="demo-logo text-white m-0">{strings.NAVBAR_HEADING}</h3>
+        </div>
         <Menu theme="dark" mode="horizontal" items={navItems} />
       </Layout.Header>
     </Layout>
