@@ -2,7 +2,7 @@ import LocalizedStrings from "react-localization";
 
 const strings = new LocalizedStrings({
   en: {
-    NAVBAR_HEADING: "Book My Show",
+    NAVBAR_HEADING: "Book My Movie",
     NAVBAR_NAVITEMS_HOME: "Home",
     NAVBAR_NAVITEMS_LOGOUT: "Logout",
     NAVBAR_NAVITEMS_MY_PROFILE: "My Profile",
