@@ -1,18 +1,23 @@
 # Dockerfile
-FROM node:20
+FROM node:20-alpine
 
-# Set working directory
-WORKDIR /app
+# Set work directory
+RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
+WORKDIR /home/node/app
 
-# Copy rest of application and build
-COPY . .
-RUN npm --prefix FrontEnd install && npm --prefix BackEnd install && npm --prefix FrontEnd run build
+# Set user node
+USER node
+
+# Copy required directries and files
+ADD --chown=node:node client client
+ADD --chown=node:node server server
+ADD .env .env
+
+# Build the project
+RUN npm --prefix client install && npm --prefix server install && npm --prefix client run build
 
 # Expose the port the app runs on
 EXPOSE 8000
 
 # Run the app
-# CMD ["tail", "-f", "/dev/null"]
-CMD ["npm", "--prefix", "BackEnd", "start"]
-
-# ENTRYPOINT ["/bin/sh"]
+CMD ["npm", "--prefix", "server", "start"]
