@@ -36,15 +36,26 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Launch via NPM",
         "type": "node",
         "request": "launch",
-        "cwd": "${workspaceFolder}/run-fullstack",
-        "runtimeArgs": ["run-script", "dev"],
-        "runtimeExecutable": "npm",
+        "name": "Run npm run dev in server directory",
         "skipFiles": ["<node_internals>/**"],
-        "console": "integratedTerminal"
-      }
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "dev"],
+        "cwd": "${workspaceFolder}/server"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug: Run npm run dev in server directory",
+        "skipFiles": ["<node_internals>/**"],
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "dev"],
+        "cwd": "${workspaceFolder}/server",
+        "autoAttachChildProcesses": true,
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      },
     ]
   }
 }
