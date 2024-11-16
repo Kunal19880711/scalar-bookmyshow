@@ -132,3 +132,7 @@ dist
 
 # vscode
 .vscode
+
+# scalar-bookmyshow
+.config
+.test-*
