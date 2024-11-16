@@ -10,6 +10,9 @@
   align-items: center;
   justify-content: center;
 }
+.app-body {
+  margin-top: 2em;
+}
 .flex-1 {
   flex: 1;
 }

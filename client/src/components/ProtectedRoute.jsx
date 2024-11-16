@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
     user && (
       <>
         <NavBar/>
-        <div className="mt-3">{children}</div>
+        <div className="app-body">{children}</div>
       </>
     )
   );
