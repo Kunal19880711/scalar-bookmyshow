@@ -29,17 +29,11 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
-      if (!!state.user) {
-        sessionStorage.setItem("isLoggedIn", "true");
-      } else {
-        sessionStorage.removeItem("isLoggedIn");
-      }
     },
     setInitializing: (state, action) => {
       state.initializing = action.payload;
     },
     logout: (state) => {
-      sessionStorage.removeItem("isLoggedIn");
       state.user = null;
       state.token = null;
     },
