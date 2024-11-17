@@ -7,19 +7,6 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("tokenForBMS");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 export function setLogoutInterceptor(cb) {
   axiosInstance.interceptors.response.use(
     (response) => {
@@ -27,6 +14,12 @@ export function setLogoutInterceptor(cb) {
     },
     (error) => {
       if (error.response.status === 401) {
+        const errorMsg = "Session expired. Please login again.";
+        if (error.response.data) {
+          error.response.data.message = errorMsg;
+        } else {
+          error.message = errorMsg;
+        }
         cb();
       }
       return Promise.reject(error);

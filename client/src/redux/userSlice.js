@@ -1,29 +1,50 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { GetCurrentUser } from "../api/user";
+import { hideLoading, showLoading } from "./loaderSlice";
+
+export const checkUserSession = createAsyncThunk(
+  "user/checkUserSession",
+  async (_, { dispatch }) => {
+    try {
+      dispatch(showLoading());
+      const response = await GetCurrentUser();
+      dispatch(setUser(response?.data));
+      dispatch(hideLoading());
+    } catch (err) {
+      dispatch(logout());
+    } finally {
+      dispatch(hideLoading());
+    }
+  }
+);
+
 const userSlice = createSlice({
-    name: "user",
-    initialState: {
-        user: null,
-        token: null,
-        initializing: true,
+  name: "user",
+  initialState: {
+    user: null,
+    initializing: true,
+  },
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+      if (!!state.user) {
+        sessionStorage.setItem("isLoggedIn", "true");
+      } else {
+        sessionStorage.removeItem("isLoggedIn");
+      }
     },
-    reducers: {
-        setUser: (state, action) => {
-            state.user = action.payload;
-        },
-        setToken: (state, action) => {
-            state.token = action.payload;
-        },
-        setInitializing: (state, action) => {
-            state.initializing = action.payload;
-        },
-        logout: (state) => {
-            localStorage.removeItem("tokenForBMS");
-            state.user = null;
-            state.token = null;
-        },
+    setInitializing: (state, action) => {
+      state.initializing = action.payload;
     },
+    logout: (state) => {
+      sessionStorage.removeItem("isLoggedIn");
+      state.user = null;
+      state.token = null;
+    },
+  },
 });
 
-export const { setUser, setToken, setInitializing, logout } = userSlice.actions;
+export const { setUser, setInitializing, logout } = userSlice.actions;
 export default userSlice.reducer;

@@ -20,6 +20,16 @@ export const LoginUser = async (value) => {
   }
 };
 
+export const LogoutUser = async () => {
+  try {
+    const response = await axiosInstance.post("/users/logout");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const GetCurrentUser = async () => {
   try {
     const response = await axiosInstance.get("/users/getCurrentUser");

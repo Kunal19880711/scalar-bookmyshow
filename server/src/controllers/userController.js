@@ -60,15 +60,24 @@ const loginUser = async (req, res, next) => {
       message: "You have successfully logged in.",
       success: true,
     };
-    if (process.env.SESSION_COOKIE_NAME) {
-      res.cookie(process.env.SESSION_COOKIE_NAME, token, {
-        maxAge: process.env.SESSION_COOKIE_MAX_AGE || 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
-    } else {
-      response.data = token;
-    }
+
+    res.cookie(process.env.SESSION_COOKIE_NAME, token, {
+      maxAge: process.env.SESSION_COOKIE_MAX_AGE || 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
     return res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const logoutUser = async (req, res, next) => {
+  try {
+    res.clearCookie(process.env.SESSION_COOKIE_NAME);
+    res.status(200).json({
+      message: "You have successfully logged out.",
+      success: true,
+    });
   } catch (error) {
     next(error);
   }
@@ -165,6 +174,7 @@ function generateOtp(length) {
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
   currentUser,
   forgotPassword,
   resetPassword,

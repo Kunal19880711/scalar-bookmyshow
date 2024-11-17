@@ -8,15 +8,30 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, message } from "antd";
 import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
 import { logout } from "../redux/userSlice";
+import { LogoutUser } from "../api/user";
 
 const NavBar = ({ children }) => {
   const { user } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const onLogoutClick = async () => {
+    try {
+      const response = await LogoutUser();
+      if (response?.success) {
+        message.success(response?.message);
+        dispatch(logout());
+      } else {
+        message.error(response?.message);
+      }
+    } catch (err) {
+      message.error(err?.response?.data?.message || err?.message);
+    }
+  };
 
   const navItems = [
     {
@@ -47,9 +62,7 @@ const NavBar = ({ children }) => {
           label: strings.NAVBAR_NAVITEMS_LOGOUT,
           icon: <LogoutOutlined />,
           key: "logout",
-          onClick: () => {
-            dispatch(logout());
-          },
+          onClick: onLogoutClick,
         },
       ],
     },

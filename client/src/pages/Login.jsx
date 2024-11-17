@@ -5,7 +5,7 @@ import { Form, Input, Button, message } from "antd";
 import { LoginUser } from "../api/user";
 import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
-import { setToken } from "../redux/userSlice";
+import { checkUserSession } from "../redux/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const Login = () => {
       const response = await LoginUser(values);
       if (response?.success) {
         message.success(response?.message);
-        dispatch(setToken(response?.data));
+        dispatch(checkUserSession());
       } else {
         message.error(response?.message);
       }
