@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
+import preload from "vite-plugin-preload";
 import { v6 as uuidv6 } from "uuid";
 import dotenv from "dotenv";
 
@@ -13,6 +14,7 @@ const uniqueId = uuidv6();
 export default defineConfig({
   plugins: [
     react(),
+    preload(),
     visualizer({
       // open: true, // Opens the report in the browser
     }),
