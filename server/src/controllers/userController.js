@@ -62,7 +62,9 @@ const loginUser = async (req, res, next) => {
     };
 
     res.cookie(process.env.SESSION_COOKIE_NAME, token, {
-      maxAge: process.env.SESSION_COOKIE_MAX_AGE || 24 * 60 * 60 * 1000,
+      maxAge:
+        Number.parseInt(process.env.SESSION_COOKIE_MAX_AGE, 10) ||
+        24 * 60 * 60 * 1000,
       httpOnly: true,
     });
     return res.status(200).json(response);
