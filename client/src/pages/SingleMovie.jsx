@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Divider, Row, Col, Input } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import useData from "../hooks/useData";
 import { GetMovieById } from "../api/movie";
 import { GetAllTheatersByMovie } from "../api/show";
 import Paths, { SubPaths } from "../constants/Paths";
+import constants from "../constants/constants";
 
 const SingleMovie = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+  const [date, setDate] = useState(
+    DateTime.now().toFormat(constants.MOVIE_RELEASEDATE_FORMAT)
+  );
   const { entities: movie } = useData(() => GetMovieById(params.id));
   const { entities: theaters } = useData(
     () => GetAllTheatersByMovie({ movieId: params.id, date }),
@@ -24,7 +27,11 @@ const SingleMovie = () => {
     Paths.BookShow.replace(SubPaths.IdParamFormat, showId);
 
   const handleDate = (e) => {
-    setDate(moment(e.target.value).format("YYYY-MM-DD"));
+    setDate(
+      DateTime.fromISO(e.target.value).toFormat(
+        constants.MOVIE_RELEASEDATE_FORMAT
+      )
+    );
     navigate(createMoviePath(e.target.value));
   };
 
@@ -33,13 +40,13 @@ const SingleMovie = () => {
       key={singleShow._id}
       onClick={() => navigate(createBookShowPath(singleShow._id))}
     >
-      {moment(singleShow.time, "HH:mm").format("hh:mm A")}
+      {DateTime.fromISO(singleShow.time).toFormat(constants.SHOWTIME_FORMAT)}
     </li>
   );
 
   const createShows = (shows) =>
     shows
-      .sort((a, b) => moment(a.time, "HH:mm") - moment(b.time, "HH:mm"))
+      .sort((a, b) => DateTime.fromISO(a.time).diff(DateTime.fromISO(b.time)))
       .map(createSingleShow);
 
   const createSingleTheater = (theater) => (
@@ -87,7 +94,11 @@ const SingleMovie = () => {
         </p>
         <p className="movie-data">
           Release Date:
-          <span>{moment(movie.date).format("MMM Do YYYY")}</span>
+          <span>
+            {DateTime.fromISO(movie.releaseDate).toFormat(
+              constants.USER_VIEW_MOVIE_RELEASEDATE_FORMAT
+            )}
+          </span>
         </p>
         <p className="movie-data">
           Duration: <span>{movie.duration} Minutes</span>
@@ -98,7 +109,7 @@ const SingleMovie = () => {
           <Input
             onChange={handleDate}
             type="date"
-            min={moment().format("YYYY-MM-DD")}
+            min={DateTime.now().toFormat(constants.MOVIE_RELEASEDATE_FORMAT)}
             className="max-width-300 mt-8px-mob"
             value={date}
             placeholder="default size"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Col, Input, Row } from "antd";
 import string from "../constants/l10n";
 import { SearchOutlined } from "@ant-design/icons";
@@ -19,7 +19,7 @@ const Home = () => {
   );
   const createMoviePath = (movie) =>
     Paths.SingleMovie.replace(SubPaths.IdParamFormat, movie._id) +
-    `?date=${moment().format("YYYY-MM-DD")}`;
+    `?date=${DateTime.now().toFormat("YYYY-MM-DD")}`;
   const createMoviePanel = (movie) => (
     <Col
       className="gutter-row mb-5"

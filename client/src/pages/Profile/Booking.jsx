@@ -1,8 +1,9 @@
 import React from "react";
 import { Row, Col, Card } from "antd";
-import moment from "moment";
 import useData from "../../hooks/useData";
 import { GetAllBookings } from "../../api/booking";
+import { DateTime } from "luxon";
+import constants from "../../constants/constants";
 
 const Booking = () => {
   const { entities: bookings } = useData(GetAllBookings);
@@ -28,9 +29,13 @@ const Booking = () => {
             <p>
               Date & Time:
               <b>
-                {moment(booking.show.date).format("MMM Do YYYY")}
+                {DateTime.fromISO(booking.show.date).toFormat(
+                  constants.USER_VIEW_MOVIE_RELEASEDATE_FORMAT
+                )}
                 &nbsp;
-                {moment(booking.show.time, "HH:mm").format("hh:mm A")}
+                {DateTime.fromISO(booking.show.time).toFormat(
+                  constants.SHOWTIME_FORMAT
+                )}
               </b>
             </p>
             <p>

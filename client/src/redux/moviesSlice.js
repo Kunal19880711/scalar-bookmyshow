@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DateTime } from "luxon";
+import constants from "../constants/constants";
 import { GetAllMovies } from "../api/movie";
 import { hideLoading, showLoading } from "./loaderSlice";
 import { extractErrorMsg } from "../utils";
@@ -9,8 +11,11 @@ export const getMoviesThunk = createAsyncThunk(
     try {
       dispatch(showLoading());
       const response = await GetAllMovies();
-      response?.data.forEach((entity) => {
-        entity.key = entity._id;
+      response?.data.forEach((movie) => {
+        movie.key = movie._id;
+        movie.releaseDate = DateTime.fromISO(movie.releaseDate).toFormat(
+          constants.MOVIE_RELEASEDATE_FORMAT
+        );
       });
       dispatch(setMoviesState({ movies: response?.data, errorMessage: null }));
     } catch (err) {

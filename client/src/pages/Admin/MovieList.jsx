@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Button, Table } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-
+import constants from "../../constants/constants";
 import strings from "../../constants/l10n";
 import { DeleteMovie } from "../../api/movie";
 import MovieForm from "./MovieForm";
@@ -68,7 +68,10 @@ const MovieList = () => {
       title: strings.MOVIELIST_TABLEHEADING_RELEASEDATE,
       dataIndex: "releaseDate",
       key: "releaseDate",
-      render: (text, data) => moment(data.releaseDate).format("MM-DD-YYYY"),
+      render: (text) =>
+        DateTime.fromFormat(text, constants.MOVIE_RELEASEDATE_FORMAT).toFormat(
+          constants.MOVIELIST_RELEASEDATE_FORMAT
+        ),
     },
     {
       title: strings.MOVIELIST_TABLEHEADING_ACTIONS,

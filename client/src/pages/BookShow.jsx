@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Row, Col, Card } from "antd";
 import { GetShowById } from "../api/show";
 import useData from "../hooks/useData";
 import CheckoutWithStripe from "./CheckoutWithStripe";
+import constants from "../constants/constants";
 
 const BookShow = () => {
   const params = useParams();
-  const { entities: show, getData } = useData(() => GetShowById({ showId: params.id }), {
-    defaultValue: null,
-  });
+  const { entities: show, getData } = useData(
+    () => GetShowById({ showId: params.id }),
+    {
+      defaultValue: null,
+    }
+  );
   const [selectedSeats, setSelectedSeats] = useState([]);
-
 
   const selectedSeatSet = new Set(selectedSeats);
   const bookedSeatSet = new Set(show?.bookedSeats || []);
@@ -20,7 +23,7 @@ const BookShow = () => {
   const reset = () => {
     setSelectedSeats([]);
     getData();
-  }
+  };
 
   const seatClickHandler = (seatNumber) => {
     if (bookedSeatSet.has(seatNumber)) {
@@ -109,8 +112,13 @@ const BookShow = () => {
               </h3>
               <h3>
                 <span>Date & Time: </span>
-                {moment(show.date).format("MMM Do YYYY")} at
-                {moment(show.time, "HH:mm").format("hh:mm A")}
+                {DateTime.fromISO(show.date).toFormat(
+                  constants.USER_VIEW_MOVIE_RELEASEDATE_FORMAT
+                )}
+                &nbsp; at &nbsp;
+                {DateTime.fromISO(show.time).toFormat(
+                  constants.SHOWTIME_FORMAT
+                )}
               </h3>
               <h3>
                 <span>Ticket Price:</span> Rs. {show.ticketPrice}/-
@@ -126,7 +134,11 @@ const BookShow = () => {
         >
           {createSeats()}
           {selectedSeats.length > 0 && (
-            <CheckoutWithStripe show={show} selectedSeats={selectedSeats} reset={reset} />
+            <CheckoutWithStripe
+              show={show}
+              selectedSeats={selectedSeats}
+              reset={reset}
+            />
           )}
         </Card>
       </Col>

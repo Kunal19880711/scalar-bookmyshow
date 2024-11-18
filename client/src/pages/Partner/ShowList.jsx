@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Button, Table } from "antd";
 import {
   DeleteOutlined,
@@ -11,6 +11,7 @@ import strings from "../../constants/l10n";
 import ShowForm from "./ShowForm";
 import useData from "../../hooks/useData";
 import DeleteEntityModal from "../../components/DeleteEntityModal";
+import constants from "../../constants/constants";
 
 const ShowList = ({ theater, movies }) => {
   const { entities: shows, getData } = useData(() =>
@@ -31,13 +32,13 @@ const ShowList = ({ theater, movies }) => {
       title: strings.SHOWLIST_TABLEHEADING_DATE,
       dataIndex: "date",
       key: "date",
-      render: (date) => moment(date).format("DD/MM/YYYY"),
+      render: (date) => DateTime.fromISO(date).toFormat(constants.SHOWDATE_FORMAT),
     },
     {
       title: strings.SHOWLIST_TABLEHEADING_TIME,
       dataIndex: "time",
       key: "time",
-      render: (time) => moment(time, "HH:mm").format("hh:mm A"),
+      render: (time) => DateTime.fromISO(time).toFormat(constants.SHOWTIME_FORMAT),
     },
     {
       title: strings.SHOWLIST_TABLEHEADING_MOVIE,
@@ -74,7 +75,7 @@ const ShowList = ({ theater, movies }) => {
               setSelectedShow({
                 ...show,
                 movie: show.movie?._id,
-                date: moment(show.date).format("YYYY-MM-DD"),
+                date: DateTime.fromISO(show.date).toFormat(constants.MOVIE_RELEASEDATE_FORMAT),
               });
               setFormType("edit");
             }}
