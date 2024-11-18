@@ -18,6 +18,9 @@ const {
   handleError,
 } = require("./middleware/handleError");
 const validateJWTToken = require("./middleware/validateJWTToken");
+const cacheControl = require("./middleware/cacheControl");
+const helmetContentSecurity = require("./controllers/helmetContentSecurity");
+const { swaggerUi, swaggerSpec } = require("./controllers/swaggerController");
 
 connectDB();
 
@@ -28,37 +31,15 @@ const apiLimiter = rateLimit({
   max: 100,
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
+
 app.use(helmet());
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      frameSrc: ["'self'", "*.stripe.com"],
-      scriptSrc: ["'self'", "*.stripe.com"], // Allow scripts from 'self'
-      styleSrc: ["'self'", "'unsafe-inline'"], // Allow inline styles (unsafe)
-      imgSrc: ["'self'", "data:", "*"], // Allow images from 'self' and data URLs,
-      connectSrc: ["'self'", "*.stripe.com"], // Allow connections to 'self'
-      fontSrc: ["'self'", "fonts.gstatic.com"], // Allow fonts from 'self' and fonts.gstatic.com
-      objectSrc: ["'none'"], // Disallow object, embed, and applet elements
-      upgradeInsecureRequests: [], // Upgrade insecure requests to HTTPS
-    },
-  })
-);
+app.use(helmetContentSecurity);
 app.use(express.json());
 app.use(mongoSanitize());
 app.use("/bms", apiLimiter);
 
 // Serve static files with custom Cache-Control headers
-app.use((req, res, next) => {
-  if (req.url.startsWith("/bms")) {
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // No caching for /bms URLs
-  } else if (req.url.match(/\.(css|js|png|jpg|jpeg|gif)$/)) {
-    res.setHeader("Cache-Control", "public, max-age=31536000"); // 1 year
-  } else if (req.url === "/index.html") {
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // No caching for index.html
-  }
-  next();
-});
+app.use(cacheControl);
 app.use(cookieParser());
 
 app.use("/", express.static(clientDistPath));
@@ -67,6 +48,9 @@ app.use("/bms/movies", validateJWTToken, movieRoute);
 app.use("/bms/theaters", validateJWTToken, theaterRoute);
 app.use("/bms/shows", validateJWTToken, showRoute);
 app.use("/bms/bookings", validateJWTToken, bookingRoute);
+
+// adding swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
