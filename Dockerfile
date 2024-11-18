@@ -11,7 +11,7 @@ USER node
 # Copy required directries and files
 ADD --chown=node:node client client
 ADD --chown=node:node server server
-ADD .env .env
+ADD .envConfig .envConfig
 
 # Build the project
 RUN npm --prefix client install && npm --prefix server install && npm --prefix client run build

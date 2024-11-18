@@ -6,7 +6,7 @@ import { v6 as uuidv6 } from "uuid";
 import dotenv from "dotenv";
 
 // Load environment variables
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: "../.envConfig" });
 
 const uniqueId = uuidv6();
 
