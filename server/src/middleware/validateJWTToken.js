@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const validateJWTToken = (req, res, next) => {
   try {
     const token = req.cookies[process.env.SESSION_COOKIE_NAME];
-    console.log("token = ", token);
     if(!token) {
       return res.status(401).json({ success: false, message: "No Token Found" });
     }
