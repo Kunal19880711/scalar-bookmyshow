@@ -6,6 +6,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { showLoading, hideLoading } from "../redux/loaderSlice";
 import Paths from "../constants/Paths";
 import { MakePaymentAndBookShow } from "../api/booking";
+import { extractErrorMsg } from "../utils";
 
 const skipStripe = import.meta.env.VITE_SKIP_STRIPE_CHECKOUT === "YES";
 const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
@@ -36,7 +37,7 @@ const CheckoutWithStripe = ({ show, selectedSeats, reset }) => {
       }
       dispatch(hideLoading());
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
       dispatch(hideLoading());
       reset();
     }

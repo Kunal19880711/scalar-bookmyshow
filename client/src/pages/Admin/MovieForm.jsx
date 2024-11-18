@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
 import { UpdateMovie, AddMovie } from "../../api/movie";
 import strings from "../../constants/l10n";
+import { extractErrorMsg } from "../../utils";
 
 const MovieForm = ({
   isModalOpen,
@@ -54,7 +55,7 @@ const MovieForm = ({
         message.error(response.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     } finally {
       dispatch(hideLoading());
     }

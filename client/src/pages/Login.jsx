@@ -6,6 +6,7 @@ import { LoginUser } from "../api/user";
 import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
 import { checkUserSession } from "../redux/userSlice";
+import { extractErrorMsg } from "../utils";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Login = () => {
         message.error(response?.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     }
   };
   return (

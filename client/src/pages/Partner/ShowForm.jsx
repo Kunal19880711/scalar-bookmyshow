@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
 import { UpdateShow, AddShow } from "../../api/show";
 import strings from "../../constants/l10n";
+import { extractErrorMsg } from "../../utils";
 
 const ShowForm = ({
   isModalOpen,
@@ -48,7 +49,7 @@ const ShowForm = ({
         message.error(response?.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     } finally {
       dispatch(hideLoading());
     }

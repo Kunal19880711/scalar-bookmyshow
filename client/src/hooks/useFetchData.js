@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { message } from "antd";
 import { showLoading, hideLoading } from "../redux/loaderSlice";
+import { extractErrorMsg } from "../utils";
 
 const defaultOps = { defaultValue: [] };
 
@@ -22,7 +23,7 @@ const useFetchData = (dataFetcher, options = {}) => {
         : response?.data;
       setEntities(entities);
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     } finally {
       dispatch(hideLoading());
     }

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
 import { RegisterUser } from "../api/user";
+import { extractErrorMsg } from "../utils";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Register = () => {
         navigate(Paths.Login);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     }
   };
   return (

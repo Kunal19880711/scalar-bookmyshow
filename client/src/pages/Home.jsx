@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Col, Input, Row } from "antd";
-import useData from "../hooks/useData";
-import { GetAllMovies } from "../api/movie";
 import string from "../constants/l10n";
 import { SearchOutlined } from "@ant-design/icons";
 import Paths, { SubPaths } from "../constants/Paths";
+import { useSelector } from "react-redux";
+import useAsyncThunk from "../hooks/useAsyncThunk";
+import { getMoviesThunk } from "../redux/moviesSlice";
 
 const Home = () => {
-  const { entities: movies, getData } = useData(GetAllMovies);
+  const { movies } = useSelector((state) => state.movies);
+  const { getData } = useAsyncThunk(getMoviesThunk);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const filteredMovies = (movies || []).filter((movie) =>

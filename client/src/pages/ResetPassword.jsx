@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
 import { ResetPassword } from "../api/user";
+import { extractErrorMsg } from "../utils";
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const ResetPasswordPage = () => {
         navigate(Paths.Login);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     }
   };
   return (

@@ -1,54 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Button, Table, message } from "antd";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Button, Table } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   PlusOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { showLoading, hideLoading } from "../../redux/loaderSlice";
-import { GetAllMovies } from "../../api/movie";
-import { DeleteTheater, GetAllTheaters } from "../../api/theater";
+import { DeleteTheater } from "../../api/theater";
 import strings from "../../constants/l10n";
 import TheaterForm from "./TheaterForm";
 import ShowList from "./ShowList";
 import DeleteEntityModal from "../../components/DeleteEntityModal";
+import useAsyncThunk from "../../hooks/useAsyncThunk";
+import { getTheatersThunk } from "../../redux/theatersSlice";
 
 const TheaterList = () => {
-  const [movies, setMovies] = useState([]);
-  const [theaters, setTheaters] = useState([]);
+  const { movies } = useSelector((state) => state.movies);
+  const { theaters } = useSelector((state) => state.theaters);
+  const { getData: getMovies } = useAsyncThunk(getTheatersThunk);
+  const { getData: getTheaters } = useAsyncThunk(getTheatersThunk);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedTheater, setSelectedTheater] = useState(null);
   const [formType, setFormType] = useState("add");
-  const dispatch = useDispatch();
   const getData = async () => {
-    try {
-      dispatch(showLoading());
-      const movieResponse = await GetAllMovies();
-      const allMovies = movieResponse?.data.map((movie) => ({
-        ...movie,
-        key: movie._id,
-      }));
-      const response = await GetAllTheaters();
-      const allTheaters = response?.data.map((theater) => ({
-        ...theater,
-        key: theater._id,
-      }));
-      setMovies(allMovies);
-      setTheaters(allTheaters);
-      dispatch(hideLoading());
-    } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
-    } finally {
-      dispatch(hideLoading());
-    }
+    getMovies();
+    getTheaters();
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   const tableHeading = [
     {

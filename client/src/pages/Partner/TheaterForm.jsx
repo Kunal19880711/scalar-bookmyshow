@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
 import { UpdateTheater, AddTheater } from "../../api/theater";
 import strings from "../../constants/l10n";
+import { extractErrorMsg } from "../../utils";
 
 const TheaterForm = ({
   isModalOpen,
@@ -48,7 +49,7 @@ const TheaterForm = ({
         message.error(response?.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     } finally {
       dispatch(hideLoading());
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { Button, Table } from "antd";
 import {
@@ -8,13 +8,16 @@ import {
 } from "@ant-design/icons";
 
 import strings from "../../constants/l10n";
-import { DeleteMovie, GetAllMovies } from "../../api/movie";
+import { DeleteMovie } from "../../api/movie";
 import MovieForm from "./MovieForm";
-import useData from "../../hooks/useData";
 import DeleteEntityModal from "../../components/DeleteEntityModal";
+import { useSelector } from "react-redux";
+import useAsyncThunk from "../../hooks/useAsyncThunk";
+import { getMoviesThunk } from "../../redux/moviesSlice";
 
 const MovieList = () => {
-  const { entities: movies, getData } = useData(GetAllMovies);
+  const { movies } = useSelector((state) => state.movies);
+  const { getData } = useAsyncThunk(getMoviesThunk);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);

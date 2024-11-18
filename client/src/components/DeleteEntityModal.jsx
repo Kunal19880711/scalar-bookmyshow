@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, message } from "antd";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/loaderSlice";
+import { extractErrorMsg } from "../utils";
 
 const DeleteEntityModal = ({
   isDeleteModalOpen,
@@ -27,7 +28,7 @@ const DeleteEntityModal = ({
         message.error(response.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     } finally {
       setSelectedEntity(null);
       setIsDeleteModalOpen(false);

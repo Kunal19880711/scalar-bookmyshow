@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Table, message } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
-import { GetAllTheaters, UpdateTheater } from "../../api/theater";
+import { UpdateTheater } from "../../api/theater";
 import strings from "../../constants/l10n";
-import useData from "../../hooks/useData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTheatersThunk } from "../../redux/theatersSlice";
+import useAsyncThunk from "../../hooks/useAsyncThunk";
+import { extractErrorMsg } from "../../utils";
 
 const TheatreTable = () => {
-  const { entities: theaters, getData } = useData(GetAllTheaters);
+  const { theaters } = useSelector((state) => state.theaters);
+  const { getData } = useAsyncThunk(getTheatersThunk);
   const dispatch = useDispatch();
   const toggleStatus = async (theater) => {
     try {
@@ -23,7 +26,7 @@ const TheatreTable = () => {
         message.error(response.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     } finally {
       dispatch(hideLoading());
     }

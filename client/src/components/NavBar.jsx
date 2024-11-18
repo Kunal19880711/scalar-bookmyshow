@@ -13,6 +13,7 @@ import Paths from "../constants/Paths";
 import strings from "../constants/l10n";
 import { logout } from "../redux/userSlice";
 import { LogoutUser } from "../api/user";
+import { extractErrorMsg } from "../utils";
 
 const NavBar = ({ children }) => {
   const { user } = useSelector((store) => store.user);
@@ -29,7 +30,7 @@ const NavBar = ({ children }) => {
         message.error(response?.message);
       }
     } catch (err) {
-      message.error(err?.response?.data?.message || err?.message);
+      message.error(extractErrorMsg(err));
     }
   };
 
